@@ -25,3 +25,6 @@ $router->get('/estimasi', 'adminController@estimasi');
 $router->post('/updateestimasi/{id}', 'adminController@updateestimasi');
 $router->get('/deleteestimasi/{id}', 'adminController@deleteestimasi');
 $router->get('/tipeestimasi/{kode_barang}', 'adminController@tipeestimasi');
+
+$router->post('/daftarteknisi', 'adminController@daftarteknisi');
+$router->get('/teknisi', 'adminController@teknisi');
