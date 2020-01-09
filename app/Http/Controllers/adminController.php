@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\M_Barang;
 use App\M_Estimasi;
+use App\M_Teknisi;
 
 class adminController extends Controller
 {
@@ -199,4 +200,49 @@ class adminController extends Controller
           ], 404);
         }
     }
+
+    public function daftarteknisi(Request $request){
+        $data = new M_Teknisi();
+        $data->t_nama = $request->input('t_nama');
+        $data->t_email = $request->input('t_email');
+        $data->t_alamat = $request->input('t_alamat');
+        $data->t_hp = $request->input('t_hp');
+        $data->t_keahlian = $request->input('t_keahlian');
+        $data->t_ktp = $request->input('t_ktp');
+        $data->t_selfi = $request->input('t_selfi');
+        $data->save();
+
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'message' => 'data disimpan',
+                'data' => $data
+            ], 200);
+          } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'data tidak disimpan',
+                'data' => ''
+            ], 404);
+          }
+    }
+
+    public function teknisi(){
+      $data = M_Teknisi::all();
+
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
 }
