@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\M_Barang;
 use App\M_Estimasi;
 use App\M_Teknisi;
+use App\M_User;
 
 class adminController extends Controller
 {
@@ -21,6 +22,53 @@ class adminController extends Controller
     // }
 
     // //
+
+    public function register(Request $request){
+        $data = new M_User();
+        $data->name = $request->input('name');
+        $data->email = $request->input('email');
+        $data->password = $request->input('password');
+        $data->save();
+
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'message' => 'data disimpan',
+                'data' => $data
+            ], 200);
+          } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'data tidak disimpan',
+                'data' => ''
+            ], 404);
+          }
+    }
+
+    public function login(Request $request){
+        // dd($request);
+        // $data = new M_User();
+        // $email = "coba";
+        $data = M_User::where('email',$request->email)
+                        ->where('password',$request->password)
+                        ->first();
+        // dd($data);
+
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
     public function barang(){
         $data = M_Barang::all();
 

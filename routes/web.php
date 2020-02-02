@@ -15,6 +15,9 @@
 //     return $router->app->version();
 // });
 
+$router->post('/register', 'adminController@register');
+$router->post('/login', 'adminController@login');
+
 $router->post('/addbarang', 'adminController@addbarang');
 $router->get('/barang', 'adminController@barang');
 $router->post('/updatebarang/{id}', 'adminController@updatebarang');
