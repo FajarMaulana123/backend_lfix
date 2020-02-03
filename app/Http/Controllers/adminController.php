@@ -27,7 +27,7 @@ class adminController extends Controller
         $data = new M_User();
         $data->name = $request->input('name');
         $data->email = $request->input('email');
-        $data->password = $request->input('password');
+        $data->password = $request->input('phone');
         $data->save();
 
         if ($data) {
@@ -49,9 +49,7 @@ class adminController extends Controller
         // dd($request);
         // $data = new M_User();
         // $email = "coba";
-        $data = M_User::where('email',$request->email)
-                        ->where('password',$request->password)
-                        ->first();
+        $data = M_User::where('phone',$request->phone)->first();
         // dd($data);
 
         if ($data) {
