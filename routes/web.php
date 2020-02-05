@@ -18,6 +18,21 @@
 $router->post('/register', 'adminController@register');
 $router->post('/login', 'adminController@login');
 
+
+// Endpoint Permintaan User
+$router->get('/kategoriBarang', 'adminController@kategoriBarang');
+
+$router->post('/service', 'adminController@service');
+
+$router->get('/delete_service', 'adminController@delete_service');
+
+$router->post('/rating', 'adminController@rating');
+
+
+
+
+// EndPoint Coba-coba
+
 $router->post('/addbarang', 'adminController@addbarang');
 $router->get('/barang', 'adminController@barang');
 $router->post('/updatebarang/{id}', 'adminController@updatebarang');
