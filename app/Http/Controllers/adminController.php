@@ -111,7 +111,7 @@ class adminController extends Controller
           $result[$i] = [
                   'name' => $key[$i]->jenis_barang,
                   'image' => $key[$i]->icon,
-                  'jenis kerusakan' => $jenis_kerusakan
+                  'jenis_kerusakan' => $jenis_kerusakan
               ];
           $i++;
         }
