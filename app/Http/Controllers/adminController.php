@@ -110,7 +110,7 @@ class adminController extends Controller
 
           $result[$i] = [
                   'name' => $key[$i]->jenis_barang,
-                  'image' => $key[$i]->icon,
+                  'image' => 'localhost:8000/images/' . $key[$i]->icon,
                   'jenis_kerusakan' => $jenis_kerusakan
               ];
           $i++;
