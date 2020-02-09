@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 08, 2020 at 03:52 AM
+-- Generation Time: Feb 09, 2020 at 03:01 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -52,8 +52,10 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`icon`, `kode_barang`) VALUES
-('Kipas.jpg', 'KP001'),
-('mesincuci.jpg', 'MC001');
+('ac.png', 'AC001'),
+('gadgets.png', 'GD001'),
+('kulkas.png', 'KK001'),
+('cuci.png', 'MC001');
 
 -- --------------------------------------------------------
 
@@ -74,9 +76,9 @@ CREATE TABLE `estimasi` (
 --
 
 INSERT INTO `estimasi` (`id_estimasi`, `kode_barang`, `est_kerusakan`, `harga`, `jenis_barang`) VALUES
-(1, 'KP001', 'Mesin Terbakar', 45000, 'Kipas Angin'),
-(2, 'KP001', 'Mesin Macet', 5000, 'Kipas Angin'),
-(3, 'KP001', 'Kabel Putus', 5000, 'Kipas Angin'),
+(1, 'AC001', 'Mesin Terbakar', 45000, 'AC'),
+(2, 'AC001', 'Mesin Macet', 5000, 'AC'),
+(3, 'AC001', 'Kabel Putus', 5000, 'AC'),
 (4, 'MC001', 'Seal Bocor', 25000, 'Mesin Cuci'),
 (5, 'MC001', 'Dinamo rusak', 120000, 'Mesin Cuci');
 
