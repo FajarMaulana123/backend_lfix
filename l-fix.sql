@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 09, 2020 at 03:01 PM
+-- Generation Time: Feb 09, 2020 at 04:15 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -80,7 +80,9 @@ INSERT INTO `estimasi` (`id_estimasi`, `kode_barang`, `est_kerusakan`, `harga`, 
 (2, 'AC001', 'Mesin Macet', 5000, 'AC'),
 (3, 'AC001', 'Kabel Putus', 5000, 'AC'),
 (4, 'MC001', 'Seal Bocor', 25000, 'Mesin Cuci'),
-(5, 'MC001', 'Dinamo rusak', 120000, 'Mesin Cuci');
+(5, 'MC001', 'Dinamo rusak', 120000, 'Mesin Cuci'),
+(6, 'GD001', 'MMC Rusak', 120000, 'Gadgets'),
+(7, 'KK001', 'Engsel Pintu rusak', 25000, 'Kulkas');
 
 -- --------------------------------------------------------
 
@@ -369,7 +371,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `estimasi`
 --
 ALTER TABLE `estimasi`
-  MODIFY `id_estimasi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_estimasi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `migrations`
