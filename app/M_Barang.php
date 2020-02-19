@@ -11,6 +11,6 @@ class M_Barang extends Model
 
     protected $table = 'barang';
     protected $primaryKey = 'kode_barang';
-    protected $fillable = ['kode_barang', 'icon'];
+    protected $fillable = ['kode_barang', 'jenis_barang', 'icon'];
 
 }

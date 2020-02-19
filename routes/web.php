@@ -15,18 +15,16 @@
 //     return $router->app->version();
 // });
 
-$router->post('/register', 'adminController@register');
-$router->post('/login', 'adminController@login');
+
 
 
 // Endpoint Permintaan User
-$router->get('/kategoriBarang', 'adminController@kategoriBarang');
-
-$router->post('/service', 'adminController@service');
-
-$router->get('/delete_service', 'adminController@delete_service');
-
-$router->post('/rating', 'adminController@rating');
+$router->post('/register', 'userController@register');
+$router->post('/login', 'userController@login');
+$router->get('/kategoriBarang', 'userController@kategoriBarang');
+$router->post('/service', 'userController@service');
+$router->get('/delete_service', 'userController@delete_service');
+$router->post('/rating', 'userController@rating');
 
 
 

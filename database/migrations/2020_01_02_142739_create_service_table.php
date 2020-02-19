@@ -15,14 +15,15 @@ class CreateServiceTable extends Migration
     {
         Schema::create('service', function (Blueprint $table) {
             $table->bigIncrements('id_service');
+            $table->integer('id');
+            $table->integer('id_teknisi');
             $table->string('kode_service')->unique();
+            $table->string('kode_barang');
+            $table->string('lokasi');
             $table->string('total_harga');
             $table->string('garansi');
+            $table->date('end_date');
             $table->string('status_service');
-            $table->integer('id_pelanggan');
-            $table->integer('id_kerusakan');
-            $table->string('kode_barang')->unique();
-            $table->integer('id_teknisi');
             $table->timestamps();
         });
     }

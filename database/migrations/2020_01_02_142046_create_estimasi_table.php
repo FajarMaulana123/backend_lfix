@@ -15,7 +15,7 @@ class CreateEstimasiTable extends Migration
     {
         Schema::create('estimasi', function (Blueprint $table) {
             $table->bigIncrements('id_estimasi');
-            $table->string('kode_barang')->unique();
+            $table->string('kode_barang');
             $table->string('est_kerusakan');
             $table->integer('harga');
             $table->string('jenis_barang');

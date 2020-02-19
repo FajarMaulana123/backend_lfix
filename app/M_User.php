@@ -11,6 +11,6 @@ class M_User extends Model
 
     protected $table = 'users';
     protected $primaryKey = 'id';
-    protected $fillable = ['name', 'email','phone','alamat', 'email_verified_at', 'remember_token','creted_at','updated_at'];
+    protected $fillable = ['name', 'email','phone','alamat', 'email_verified_at'];
 
 }
