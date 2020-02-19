@@ -95,29 +95,31 @@ class adminController extends Controller
 
         $barang = $data->groupBy('jenis_barang');
 
-        $i = 0;
-
+        // dd($barang);
+        
+        
         foreach ($barang as $key) {
+          $i = 0;    
           
-          $a = 0;
-          foreach ($key as $hasil) {
+
+          for ($a=0; $a < sizeof($key); $a++) { 
             $jenis_kerusakan[$a] = [
-               'nama' => $hasil->est_kerusakan,
-               'harga' => $hasil->harga
+               'nama' => $key[$a]->est_kerusakan,
+               'harga' => $key[$a]->harga
             ];
-            $a++;
           }
 
-          $result[$i] = [
+          $result[] = [
                   'name' => $key[$i]->jenis_barang,
-                  'image' => 'localhost:8000/images/' . $key[$i]->icon,
+                  'image' => 'localhost:8000/images/' . $key[0]->icon,
                   'jenis_kerusakan' => $jenis_kerusakan
               ];
+
+          $jenis_kerusakan = [];
+          
           $i++;
         }
         
-
-        // $result = json_encode($result, false);
 
 
         if ($data) {
