@@ -18,7 +18,6 @@ class CreateEstimasiTable extends Migration
             $table->string('kode_barang');
             $table->string('est_kerusakan');
             $table->integer('harga');
-            $table->string('jenis_barang');
         });
     }
 

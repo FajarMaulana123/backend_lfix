@@ -71,6 +71,7 @@ class userController extends Controller
     }
 
     public function kategoriBarang(){
+        
         $data = M_Barang::join('estimasi', 'barang.kode_barang', '=', 'estimasi.kode_barang')
                 ->orderBy('estimasi.est_kerusakan', 'ASC')
                 ->get();
