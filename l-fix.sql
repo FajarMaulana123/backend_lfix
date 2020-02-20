@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 09, 2020 at 04:15 PM
--- Server version: 5.7.24
--- PHP Version: 7.2.19
+-- Host: 127.0.0.1
+-- Generation Time: Feb 20, 2020 at 06:03 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -43,19 +43,18 @@ CREATE TABLE `admin` (
 --
 
 CREATE TABLE `barang` (
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kode_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `kode_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jenis_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`icon`, `kode_barang`) VALUES
-('ac.png', 'AC001'),
-('gadgets.png', 'GD001'),
-('kulkas.png', 'KK001'),
-('cuci.png', 'MC001');
+INSERT INTO `barang` (`kode_barang`, `jenis_barang`, `icon`) VALUES
+('AC001', 'AC', 'ac.png'),
+('MC001', 'Mesin Cuci', 'cuci.png');
 
 -- --------------------------------------------------------
 
@@ -67,22 +66,17 @@ CREATE TABLE `estimasi` (
   `id_estimasi` bigint(20) UNSIGNED NOT NULL,
   `kode_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `est_kerusakan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `harga` int(11) NOT NULL,
-  `jenis_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `estimasi`
 --
 
-INSERT INTO `estimasi` (`id_estimasi`, `kode_barang`, `est_kerusakan`, `harga`, `jenis_barang`) VALUES
-(1, 'AC001', 'Mesin Terbakar', 45000, 'AC'),
-(2, 'AC001', 'Mesin Macet', 5000, 'AC'),
-(3, 'AC001', 'Kabel Putus', 5000, 'AC'),
-(4, 'MC001', 'Seal Bocor', 25000, 'Mesin Cuci'),
-(5, 'MC001', 'Dinamo rusak', 120000, 'Mesin Cuci'),
-(6, 'GD001', 'MMC Rusak', 120000, 'Gadgets'),
-(7, 'KK001', 'Engsel Pintu rusak', 25000, 'Kulkas');
+INSERT INTO `estimasi` (`id_estimasi`, `kode_barang`, `est_kerusakan`, `harga`) VALUES
+(1, 'MC001', 'kabel', 1000),
+(2, 'MC001', 'tombol', 2000),
+(3, 'AC001', 'Freon', 3000);
 
 -- --------------------------------------------------------
 
@@ -115,55 +109,15 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2020_01_02_141148_create_admin_table', 1),
-(4, '2020_01_02_141524_create_sk_table', 1),
-(5, '2020_01_02_141651_create_barang_table', 1),
-(6, '2020_01_02_142046_create_estimasi_table', 1),
-(7, '2020_01_02_142331_create_pelanggan_table', 1),
-(8, '2020_01_02_142518_create_teknisi_table', 1),
-(9, '2020_01_02_142739_create_service_table', 1),
-(10, '2020_01_02_143310_create_kerusakan_table', 1),
-(11, '2020_02_02_100038_modify_users_table', 2),
-(12, '2020_02_03_143535_remove_password_user_table', 3),
-(13, '2020_02_05_090747_drop_column_jenis_barang_barang_table', 4),
-(14, '2020_02_05_091256_drop_column_id_barang_barang_table', 5),
-(15, '2020_02_05_091530_primary_column_kode_barang_barang_table', 6),
-(16, '2020_02_05_091843_primary_make_column_kode_barang_barang_table', 7),
-(17, '2020_02_05_115133_add_alamat_users_table', 8),
-(18, '2020_02_05_120048_rename_id_pelanggan_to_id_user_service_table', 9),
-(19, '2020_02_05_120812_make_join_id_user_and_id_on_service_table', 10),
-(20, '2020_02_05_124143_drop_column_id_kerusakan_service_table', 11),
-(21, '2020_02_05_134056_create_rating_table', 12);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pelanggan`
---
-
-CREATE TABLE `pelanggan` (
-  `id_pelanggan` bigint(20) UNSIGNED NOT NULL,
-  `p_nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `p_email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `p_hp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `p_alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(47, '2014_10_12_000000_create_users_table', 1),
+(48, '2020_01_02_141148_create_admin_table', 1),
+(49, '2020_01_02_141524_create_sk_table', 1),
+(50, '2020_01_02_141651_create_barang_table', 1),
+(51, '2020_01_02_142046_create_estimasi_table', 1),
+(52, '2020_01_02_142518_create_teknisi_table', 1),
+(53, '2020_01_02_142739_create_service_table', 1),
+(54, '2020_01_02_143310_create_kerusakan_table', 1),
+(55, '2020_02_05_134056_create_rating_table', 1);
 
 -- --------------------------------------------------------
 
@@ -179,13 +133,6 @@ CREATE TABLE `rating` (
   `feedback` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `rating`
---
-
-INSERT INTO `rating` (`id_rating`, `kode_service`, `id_user`, `rating`, `feedback`) VALUES
-(1, '05022020', 1, '4.5', 'Mas nya gemesin :*');
-
 -- --------------------------------------------------------
 
 --
@@ -194,17 +141,28 @@ INSERT INTO `rating` (`id_rating`, `kode_service`, `id_user`, `rating`, `feedbac
 
 CREATE TABLE `service` (
   `id_service` bigint(20) UNSIGNED NOT NULL,
+  `id` int(11) NOT NULL,
+  `id_teknisi` int(11) DEFAULT NULL,
   `kode_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kode_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_harga` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `garansi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
   `status_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_user` bigint(20) UNSIGNED NOT NULL,
-  `lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `kode_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `id_teknisi` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `service`
+--
+
+INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `garansi`, `start_date`, `end_date`, `status_service`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-19 19:44:06', '2020-02-19 19:55:29'),
+(2, 1, NULL, 'SV002', 'AC001', 'cirebon', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-20 15:13:11', '2020-02-20 16:27:38'),
+(3, 1, NULL, 'SV003', 'MC001', 'jatibarang', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-20 16:19:47', '2020-02-20 16:28:27');
 
 -- --------------------------------------------------------
 
@@ -242,9 +200,7 @@ CREATE TABLE `teknisi` (
 --
 
 INSERT INTO `teknisi` (`id_teknisi`, `t_nama`, `t_email`, `t_alamat`, `t_hp`, `t_keahlian`, `t_ktp`, `t_selfi`, `created_at`, `updated_at`) VALUES
-(1, 'Rama', 'rama@gmail.com', 'indramayu', '089675434788', 'servis hp', 'foto.jpg', 'foto1.jpg', '2020-01-03 03:37:33', '2020-01-03 03:37:33'),
-(2, 'Sofyan', 'sofyan@gmail.com', 'indramayu', '089675434788', 'servis kipas', 'foto.jpg', 'foto1.jpg', '2020-01-03 03:38:43', '2020-01-03 03:38:43'),
-(3, 'fajar', 'fajar@gmail.com', 'indramayu', '0896078899', 'servis tv', 'foto.jpg', 'foto1.jpg', '2020-01-03 04:36:14', '2020-01-03 04:36:14');
+(1, 'sofyan', 'sofyan@gmail.com', 'indramayu', '089765846', 'Service AC', 'ktp.jpg', 'selfi.jpg', '2020-02-06 17:00:00', '2020-02-19 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -257,20 +213,16 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alamat`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Sofyan', 'maulana27051998@gmail.com', '0895334623006', '', NULL, NULL, '2020-02-02 07:39:13', '2020-02-02 07:39:13'),
-(2, 'Elba Ayu Kurnia', 'elba@gmail.com', '089999922234', '', NULL, NULL, '2020-02-03 14:50:14', '2020-02-03 14:50:14');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alamat`, `email_verified_at`) VALUES
+(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL);
 
 --
 -- Indexes for dumped tables
@@ -294,32 +246,19 @@ ALTER TABLE `barang`
 --
 ALTER TABLE `estimasi`
   ADD PRIMARY KEY (`id_estimasi`),
-  ADD KEY `join_estimasi_and_barang` (`kode_barang`);
+  ADD KEY `estimasi_kode_barang_foreign` (`kode_barang`);
 
 --
 -- Indexes for table `kerusakan`
 --
 ALTER TABLE `kerusakan`
-  ADD UNIQUE KEY `kerusakan_kode_service_unique` (`kode_service`);
+  ADD KEY `kerusakan_kode_service_foreign` (`kode_service`);
 
 --
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
-
---
--- Indexes for table `pelanggan`
---
-ALTER TABLE `pelanggan`
-  ADD PRIMARY KEY (`id_pelanggan`),
-  ADD UNIQUE KEY `pelanggan_p_email_unique` (`p_email`);
 
 --
 -- Indexes for table `rating`
@@ -332,10 +271,7 @@ ALTER TABLE `rating`
 --
 ALTER TABLE `service`
   ADD PRIMARY KEY (`id_service`),
-  ADD UNIQUE KEY `service_kode_service_unique` (`kode_service`),
-  ADD KEY `service_id_user_foreign` (`id_user`),
-  ADD KEY `service_kode_barang_foreign` (`kode_barang`),
-  ADD KEY `service_id_teknisi_foreign` (`id_teknisi`);
+  ADD UNIQUE KEY `service_kode_service_unique` (`kode_service`);
 
 --
 -- Indexes for table `sk`
@@ -371,31 +307,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `estimasi`
 --
 ALTER TABLE `estimasi`
-  MODIFY `id_estimasi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_estimasi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
---
--- AUTO_INCREMENT for table `pelanggan`
---
-ALTER TABLE `pelanggan`
-  MODIFY `id_pelanggan` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id_rating` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_rating` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id_service` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_service` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sk`
@@ -407,13 +337,13 @@ ALTER TABLE `sk`
 -- AUTO_INCREMENT for table `teknisi`
 --
 ALTER TABLE `teknisi`
-  MODIFY `id_teknisi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_teknisi` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -423,15 +353,13 @@ ALTER TABLE `users`
 -- Constraints for table `estimasi`
 --
 ALTER TABLE `estimasi`
-  ADD CONSTRAINT `join_estimasi_and_barang` FOREIGN KEY (`kode_barang`) REFERENCES `barang` (`kode_barang`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `estimasi_kode_barang_foreign` FOREIGN KEY (`kode_barang`) REFERENCES `barang` (`kode_barang`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `service`
+-- Constraints for table `kerusakan`
 --
-ALTER TABLE `service`
-  ADD CONSTRAINT `service_id_teknisi_foreign` FOREIGN KEY (`id_teknisi`) REFERENCES `teknisi` (`id_teknisi`),
-  ADD CONSTRAINT `service_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `service_kode_barang_foreign` FOREIGN KEY (`kode_barang`) REFERENCES `barang` (`kode_barang`);
+ALTER TABLE `kerusakan`
+  ADD CONSTRAINT `kerusakan_kode_service_foreign` FOREIGN KEY (`kode_service`) REFERENCES `service` (`kode_service`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

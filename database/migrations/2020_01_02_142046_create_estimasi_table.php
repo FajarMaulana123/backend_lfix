@@ -18,6 +18,8 @@ class CreateEstimasiTable extends Migration
             $table->string('kode_barang');
             $table->string('est_kerusakan');
             $table->integer('harga');
+
+            $table->foreign('kode_barang')->references('kode_barang')->on('barang')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

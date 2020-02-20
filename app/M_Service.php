@@ -11,7 +11,7 @@ class M_Service extends Model
 
     protected $table = 'service';
     protected $primaryKey = 'id_service';
-    protected $fillable = ['kode_service', 'total_harga', 'garansi', 'status_service', 'id','lokasi', 'id_kerusakan', 'kode_barang', 'id_teknisi', 'created_at', 	'updated_at' ];
+    protected $fillable = ['id','id_teknisi','kode_service', 'kode_barang', 'lokasi','total_harga', 'garansi', 'start_date','end_date', 'status_service', 'created_at','updated_at' ];
 
 }
  

@@ -23,8 +23,14 @@ $router->post('/register', 'userController@register');
 $router->post('/login', 'userController@login');
 $router->get('/kategoriBarang', 'userController@kategoriBarang');
 $router->post('/service', 'userController@service');
-$router->get('/delete_service', 'userController@delete_service');
+$router->post('/data_service', 'userController@dataservice');
+$router->post('/confirm_service', 'userController@confirm_service');
+$router->post('/cancel_service', 'userController@cancel_service');
 $router->post('/rating', 'userController@rating');
+
+//teknisi
+$router->get('/api/teknisi/dataservice', 'teknisiController@dataservice');
+$router->post('/api/teknisi/ambilservice', 'teknisiController@ambilservice');
 
 
 
