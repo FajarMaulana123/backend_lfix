@@ -220,8 +220,8 @@ class userController extends Controller
             'guarantee' => [
                 'id_guarantee' => $services[$i]->id_service,
                 'id_service' => $services[$i]->id_service,
-                'status' => $service[$i]->status_garansi,
-                'valid_until' => $$service[$i]->end_date,
+                'status' => $services[$i]->status_garansi,
+                'valid_until' => $services[$i]->end_date,
             ]
                 
             

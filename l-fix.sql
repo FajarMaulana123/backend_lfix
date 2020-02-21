@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2020 at 06:03 PM
+-- Generation Time: Feb 21, 2020 at 03:56 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -147,7 +147,7 @@ CREATE TABLE `service` (
   `kode_barang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_harga` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `garansi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status_garansi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `status_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -159,9 +159,9 @@ CREATE TABLE `service` (
 -- Dumping data for table `service`
 --
 
-INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `garansi`, `start_date`, `end_date`, `status_service`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-19 19:44:06', '2020-02-19 19:55:29'),
-(2, 1, NULL, 'SV002', 'AC001', 'cirebon', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-20 15:13:11', '2020-02-20 16:27:38'),
+INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `status_service`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
+(2, 1, 1, 'SV002', 'AC001', 'cirebon', NULL, NULL, '2020-02-21', NULL, 'On Process', '2020-02-20 15:13:11', '2020-02-21 08:47:28'),
 (3, 1, NULL, 'SV003', 'MC001', 'jatibarang', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-20 16:19:47', '2020-02-20 16:28:27');
 
 -- --------------------------------------------------------
