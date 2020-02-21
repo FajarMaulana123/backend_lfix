@@ -11,6 +11,7 @@ use App\M_Teknisi;
 use App\M_User;
 use App\M_Service;
 use App\M_Rating;
+use App\M_Kerusakan;
 
 use Carbon\Carbon;
 
@@ -166,32 +167,68 @@ class userController extends Controller
         ->where('service.id', $id_user)
         ->get();
 
-        // $coba = $service->groupBy('kode_barang');
-        // dd($service);
+     
+        $coba = $service->groupBy('id_service');
+        // dd($coba);
+
         
         // $i =0;
-        foreach ($service as $services){
+        // foreach ($coba as $services){
+        //   $damege[$i] = [
+        //     'jenis' => $services->kerusakan,
+        //     'harga' => $services->harga,
+        //   ];
+        //   $i++;
+        // } 
+
+        
+        // dd($kerusakan);
+        
+        foreach ($coba as $services){
+          $i = 0;
+          // $kerusakan = M_Kerusakan::where('kode_service', $service[]->kode_service)->get();
+
+          for ($a=0; $a < sizeof($services); $a++) { 
+            $damege[$a] = [
+               'jenis' => $services[$a]->kerusakan,
+               'harga' => $services[$a]->harga
+            ];
+            
+          }
+          // dd($damege);
+          // $valid_until = $services[$i]->end_date tamabah 1 bulan;
+         
+          // if(date('Y-m-d') < $valid_until){
+          //   $status_garansi = 'valid';
+          // } else {
+          //   $status_garansi = 'expire';
+          // }
 
           $data[] = [
-            'idService' => $services->id_service,
-            'status' => $services->status_service,
-            'kode_barang' => $services->kode_barang,
-            'kategori' => $services->jenis_barang,
-            'lokasiPelanggan' => $services->lokasi,
-            'startDate' => $services->start_date,
+            'idService' => $services[$i]->id_service,
+            'status' => $services[$i]->status_service,
+            'kode_barang' => $services[$i]->kode_barang,
+            'kategori' => $services[$i]->jenis_barang,
+            'lokasiPelanggan' => $services[$i]->lokasi,
+            'startDate' => $services[$i]->start_date,
             'teknisi' => [
-                'namaTeknisi' => $services->t_nama,
-                'lokasiTeknisi' => $services->t_alamat,
-                'specialist' => $services->t_keahlian,
+                'namaTeknisi' => $services[$i]->t_nama,
+                'lokasiTeknisi' => $services[$i]->t_alamat,
+                'specialist' => $services[$i]->t_keahlian,
             ],
-            'damage' => [
-                'jenis' => $services->kerusakan,
-                'harga' => $services->harga,
-            ],
+            'damage' => $damege,
+            'guarantee' => [
+                'id_guarantee' => $services[$i]->id_service,
+                'id_service' => $services[$i]->id_service,
+                'status' => $service[$i]->status_garansi,
+                'valid_until' => $$service[$i]->end_date,
+            ]
+                
+            
           ];
-          
+          $damege = [];
 
-        // $i++;
+        $i++;
         }
         
         if ($service) {
@@ -210,9 +247,10 @@ class userController extends Controller
 
     }
 
-    public function confirm_service(Request $request){
+    public function confirm_teknisi(Request $request){
+
         $id_service = $request->input('id_service');
-        $start_date = date('d-m-Y');
+        $start_date = date('Y-m-d');
         $status = 'On Process';
         
         $data = M_Service::where('id_service', $id_service)->update([
@@ -224,7 +262,7 @@ class userController extends Controller
           return response()->json([
               'success' => true,
               'message' => 'data disimpan',
-              'data' => ''
+              'data' => 'Service telah diterima'
           ], 200);
         } else {
           return response()->json([
@@ -237,7 +275,7 @@ class userController extends Controller
 
     }
 
-    public function cancel_service(Request $request){
+    public function cancel_teknisi(Request $request){
         $id_service = $request->input('id_service');
         $data = M_Service::where('id_service', $id_service)->update([
             'id_teknisi' => null,
@@ -246,7 +284,7 @@ class userController extends Controller
         if ($data) {
           return response()->json([
               'success' => true,
-              'message' => 'data disimpan',
+              'message' => 'teknisi telah dicancel',
               'data' => ''
           ], 200);
         } else {
@@ -255,8 +293,43 @@ class userController extends Controller
               'message' => 'data tidak ditemukan',
               'data' => ''
           ], 404);
-        }
-        
+        }     
+    }
+
+    public function cancel_damage(Request $request){
+        $kode_service = $request->input('kode_service');
+        $data = M_Kerusakan::where('kode_service', $kode_service)->delete();
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'damage telah dicancel',
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+          ], 404);
+        }    
+
+    }
+
+    public function confirm_damage(Request $request){
+        $id = $request->input('id_service');
+        $total = $request->input('total_harga');
+        $data = M_Service::where('id_service', $id)->update([
+            'total_harga' => $total,
+        ]);
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'damage telah disetujui',
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+          ], 404);
+        } 
     }
 
     public function rating(Request $request){

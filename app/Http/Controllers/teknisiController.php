@@ -50,7 +50,7 @@ class teknisiController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'data tersimpan',
-                'data' => $data
+                'data' => 'service telah diambil'
             ], 200);
           } else {
             return response()->json([

@@ -27,6 +27,8 @@ $router->post('/data_service', 'userController@dataservice');
 $router->post('/confirm_service', 'userController@confirm_service');
 $router->post('/cancel_service', 'userController@cancel_service');
 $router->post('/rating', 'userController@rating');
+$router->post('/cancel_damage', 'userController@cancel_damage');
+$router->post('/confirm_damage', 'userController@confirm_damage');
 
 //teknisi
 $router->get('/api/teknisi/dataservice', 'teknisiController@dataservice');

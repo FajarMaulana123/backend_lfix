@@ -21,7 +21,7 @@ class CreateServiceTable extends Migration
             $table->string('kode_barang');
             $table->string('lokasi');
             $table->string('total_harga')->nullable();
-            $table->string('garansi')->nullable();
+            $table->string('status_garansi')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('status_service');
