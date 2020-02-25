@@ -24,6 +24,7 @@ class CreateServiceTable extends Migration
             $table->string('status_garansi')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->date('valid_until')->nullable();
             $table->string('status_service');
             $table->timestamps();
         });

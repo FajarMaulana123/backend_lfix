@@ -15,7 +15,9 @@ class CreateGaransiTable extends Migration
     {
         Schema::create('garansi', function (Blueprint $table) {
             $table->bigIncrements('id_garansi');
-            
+            $table->string('kode_service');
+            $table->date('valid_until');
+            $table->string('status_garansi');
             $table->timestamps();
         });
     }

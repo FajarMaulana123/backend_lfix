@@ -165,11 +165,17 @@ class userController extends Controller
         ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
         ->leftjoin('kerusakan', 'service.kode_service', '=', 'kerusakan.kode_service')
         ->where('service.id', $id_user)
+        ->select('service.id_service', 'service.id', 'service.id_teknisi', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
+        'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date', 'service.valid_until', 'service.status_service',
+        'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian',
+        'kerusakan.harga', 'kerusakan.kerusakan',
+        'barang.kode_barang', 'barang.jenis_barang')
         ->get();
 
-     
+        // dd($service);
         $coba = $service->groupBy('id_service');
-        // dd($coba);
+        // dd($coba->kode_service);
+
 
         
         // $i =0;
@@ -195,10 +201,13 @@ class userController extends Controller
             ];
             
           }
+
+          // dd($service[$i]->kode_service);
           // dd($damege);
-          // $valid_until = $services[$i]->end_date tamabah 1 bulan;
+          // $tgl = $services[$i]->end_date;
+          // $tgl2 = date('Y-m-d', strtotime('+1 month', strtotime($tgl)));
          
-          // if(date('Y-m-d') < $valid_until){
+          // if(date('Y-m-d') < $tgl2){
           //   $status_garansi = 'valid';
           // } else {
           //   $status_garansi = 'expire';
@@ -207,10 +216,12 @@ class userController extends Controller
           $data[] = [
             'idService' => $services[$i]->id_service,
             'status' => $services[$i]->status_service,
+            'kode_service' => $services[$i]->kode_service,
             'kode_barang' => $services[$i]->kode_barang,
             'kategori' => $services[$i]->jenis_barang,
             'lokasiPelanggan' => $services[$i]->lokasi,
             'startDate' => $services[$i]->start_date,
+            'endDate' => $services[$i]->end_date,
             'teknisi' => [
                 'namaTeknisi' => $services[$i]->t_nama,
                 'lokasiTeknisi' => $services[$i]->t_alamat,
@@ -221,7 +232,7 @@ class userController extends Controller
                 'id_guarantee' => $services[$i]->id_service,
                 'id_service' => $services[$i]->id_service,
                 'status' => $services[$i]->status_garansi,
-                'valid_until' => $services[$i]->end_date,
+                'valid_until' => $services[$i]->valid_until,
             ]
                 
             
@@ -358,6 +369,97 @@ class userController extends Controller
                 'data' => ''
             ], 404);
           }
+    }
+
+    public function data_guarantee (Request $request){
+        $id_user = $request->input('userId');
+        $service = M_Service::leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
+        ->join('users', 'service.id', '=', 'users.id')
+        ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
+        ->leftjoin('kerusakan', 'service.kode_service', '=', 'kerusakan.kode_service')
+        ->where('service.id', $id_user )
+        ->whereNotNull('service.status_garansi')
+        ->select('service.id_service', 'service.id', 'service.id_teknisi', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
+        'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date', 'service.status_service',
+        'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian',
+        'kerusakan.harga', 'kerusakan.kerusakan',
+        'barang.kode_barang', 'barang.jenis_barang')
+        ->get();
+        
+        $coba = $service->groupBy('id_service');
+        
+        
+        
+        
+        foreach ($coba as $services){
+          $i = 0;
+          $dd = $services[$i]->status_garansi;
+          // dd($dd);
+          // if($services[$i]->status_garansi != null){
+            for ($a=0; $a < sizeof($services); $a++) { 
+              $damege[$a] = [
+                 'jenis' => $services[$a]->kerusakan,
+                 'harga' => $services[$a]->harga
+              ];
+              
+            }
+            // if($services[$i]->status_garansi == null){
+            //   if ($service) {
+            //     return response()->json([
+            //         'success' => true,
+            //         'message' => 'data kosong',
+                    
+            //     ], 200);
+            //   }
+            // }
+
+          
+            // if ($services[$i]->status_garansi != null){
+            $data[] = [
+              'id_guarantee' => $services[$i]->id_service,
+              'status' => $services[$i]->status_garansi,
+              'valid_until' => $services[$i]->end_date,
+              'service' => [
+                'idService' => $services[$i]->id_service,
+                'status' => $services[$i]->status_service,
+                'kategori' => $services[$i]->jenis_barang,
+                'lokasiPelanggan' => $services[$i]->lokasi,
+                'startDate' => $services[$i]->start_date,
+                'endDate' => $services[$i]->end_date,
+                'teknisi' => [
+                    'namaTeknisi' => $services[$i]->t_nama,
+                    'lokasiTeknisi' => $services[$i]->t_alamat,
+                    'specialist' => $services[$i]->t_keahlian,
+                ],
+                'damage' => $damege,
+              ],
+    
+            ];
+          
+            
+
+            $damege = [];
+          // }
+
+          
+
+        $i++;
+        }
+        
+        if ($service) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data,
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+
     }
 
 }

@@ -24,15 +24,20 @@ $router->post('/login', 'userController@login');
 $router->get('/kategoriBarang', 'userController@kategoriBarang');
 $router->post('/service', 'userController@service');
 $router->post('/data_service', 'userController@dataservice');
-$router->post('/confirm_service', 'userController@confirm_service');
-$router->post('/cancel_service', 'userController@cancel_service');
+$router->post('/confirm_teknisi', 'userController@confirm_teknisi');
+$router->post('/cancel_teknisi', 'userController@cancel_teknisi');
 $router->post('/rating', 'userController@rating');
 $router->post('/cancel_damage', 'userController@cancel_damage');
 $router->post('/confirm_damage', 'userController@confirm_damage');
+$router->post('/data_guarantee', 'userController@data_guarantee');
 
 //teknisi
 $router->get('/api/teknisi/dataservice', 'teknisiController@dataservice');
 $router->post('/api/teknisi/ambilservice', 'teknisiController@ambilservice');
+$router->post('/api/teknisi/kerusakan', 'teknisiController@kerusakan');
+$router->post('/api/teknisi/servicedone', 'teknisiController@servicedone');
+$router->post('/api/teknisi/datakerusakan', 'teknisiController@datateknisi');
+$router->post('/api/teknisi/rating', 'teknisiController@rating');
 
 
 
