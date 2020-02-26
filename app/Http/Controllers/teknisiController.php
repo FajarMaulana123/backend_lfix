@@ -62,6 +62,26 @@ class teknisiController extends Controller
           }
     }
 
+    public function pergi (Request $request){
+        $kode_service = $request->input('kode_service');
+        $data = M_Service::where('kode_service', $kode_service)->update([
+            'status_teknisi' => 'On the way',
+        ]);
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'teknisi on the way',
+            ], 200);
+        } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+        ], 404);
+        }
+        
+    }
+
     public function kerusakan(Request $request){
         // $kode_service = $request->input('kode_service');
         // $kerusakan = $request->input('kerusakan');
@@ -80,6 +100,7 @@ class teknisiController extends Controller
         }
 
         $service = M_Service::where('kode_service', $kode)->update([
+            'status_teknisi' => 'Need confirmation',
             'total_harga' => $total,
         ]);
         
@@ -90,6 +111,25 @@ class teknisiController extends Controller
             'success' => true,
             'message' => 'data tersimpan',
         ], 200);
+        } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+        ], 404);
+        }
+    }
+
+    public function doingservice(Request $request){
+        $kode_service = $request->input('kode_service');
+        $data = M_Service::where('kode_service', $kode_service)->update([
+            'status_teknisi' => 'Doing service',
+        ]);
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'teknisi dalam proses pengerjaan',
+            ], 200);
         } else {
         return response()->json([
             'success' => false,

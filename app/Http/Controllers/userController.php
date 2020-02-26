@@ -166,7 +166,7 @@ class userController extends Controller
         ->leftjoin('kerusakan', 'service.kode_service', '=', 'kerusakan.kode_service')
         ->where('service.id', $id_user)
         ->select('service.id_service', 'service.id', 'service.id_teknisi', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
-        'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date', 'service.valid_until', 'service.status_service',
+        'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date', 'service.valid_until', 'service.status_teknisi', 'service.status_service',
         'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian',
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
@@ -235,6 +235,7 @@ class userController extends Controller
                   'namaTeknisi' => $services[$i]->t_nama,
                   'lokasiTeknisi' => $services[$i]->t_alamat,
                   'specialist' => $services[$i]->t_keahlian,
+                  'status_teknisi' => $services[$i]->status_teknisi,
               ],
               'damage' => null,
               'guarantee' => null,
@@ -256,6 +257,7 @@ class userController extends Controller
                   'namaTeknisi' => $services[$i]->t_nama,
                   'lokasiTeknisi' => $services[$i]->t_alamat,
                   'specialist' => $services[$i]->t_keahlian,
+                  'status_teknisi' => $services[$i]->status_teknisi,
               ],
               'damage' => $damege,
               'guarantee' => null,
@@ -279,6 +281,7 @@ class userController extends Controller
                 'namaTeknisi' => $services[$i]->t_nama,
                 'lokasiTeknisi' => $services[$i]->t_alamat,
                 'specialist' => $services[$i]->t_keahlian,
+                'status_teknisi' => $services[$i]->status_teknisi,
             ],
             'damage' => $damege,
             'guarantee' => [
