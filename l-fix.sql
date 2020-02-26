@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2020 at 11:09 AM
+-- Generation Time: Feb 26, 2020 at 05:39 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -161,6 +161,7 @@ CREATE TABLE `service` (
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `valid_until` date DEFAULT NULL,
+  `status_teknisi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -170,10 +171,10 @@ CREATE TABLE `service` (
 -- Dumping data for table `service`
 --
 
-INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `valid_until`, `status_service`, `created_at`, `updated_at`) VALUES
-(5, 1, 1, 'SV002', 'AC001', 'indramayu', '3000', 'Valid', '2020-02-26', '2020-02-26', '2020-02-20', 'Done', '2020-02-25 17:00:00', '2020-02-26 07:53:43'),
-(6, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, NULL, NULL, NULL, 'On Process', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
-(8, 1, 1, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00');
+INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `valid_until`, `status_teknisi`, `status_service`, `created_at`, `updated_at`) VALUES
+(5, 1, 1, 'SV002', 'AC001', 'indramayu', '3000', 'Expired', '2020-02-26', '2020-02-26', '2020-02-20', NULL, 'Done', '2020-02-25 17:00:00', '2020-02-26 16:11:59'),
+(6, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, NULL, NULL, NULL, 'Need confirmation', 'On Process', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
+(8, 1, 1, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, 'On the way', 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00');
 
 -- --------------------------------------------------------
 
