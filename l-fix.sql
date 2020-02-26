@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2020 at 03:56 PM
+-- Generation Time: Feb 26, 2020 at 10:41 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -92,6 +92,15 @@ CREATE TABLE `kerusakan` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `kerusakan`
+--
+
+INSERT INTO `kerusakan` (`kode_service`, `harga`, `kerusakan`, `created_at`, `updated_at`) VALUES
+('SV001', 3000, 'kabel', '2020-02-20 17:00:00', '2020-02-20 17:00:00'),
+('SV002', 1000, 'swing', '2020-02-26 07:21:01', '2020-02-26 07:21:01'),
+('SV002', 2000, 'mesin', '2020-02-26 07:21:01', '2020-02-26 07:21:01');
+
 -- --------------------------------------------------------
 
 --
@@ -117,7 +126,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (52, '2020_01_02_142518_create_teknisi_table', 1),
 (53, '2020_01_02_142739_create_service_table', 1),
 (54, '2020_01_02_143310_create_kerusakan_table', 1),
-(55, '2020_02_05_134056_create_rating_table', 1);
+(55, '2020_02_05_134056_create_rating_table', 1),
+(56, '2020_02_21_053249_create_garansi_table', 2);
 
 -- --------------------------------------------------------
 
@@ -150,6 +160,7 @@ CREATE TABLE `service` (
   `status_garansi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
+  `valid_until` date DEFAULT NULL,
   `status_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -159,10 +170,9 @@ CREATE TABLE `service` (
 -- Dumping data for table `service`
 --
 
-INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `status_service`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
-(2, 1, 1, 'SV002', 'AC001', 'cirebon', NULL, NULL, '2020-02-21', NULL, 'On Process', '2020-02-20 15:13:11', '2020-02-21 08:47:28'),
-(3, 1, NULL, 'SV003', 'MC001', 'jatibarang', NULL, NULL, NULL, NULL, 'Waiting', '2020-02-20 16:19:47', '2020-02-20 16:28:27');
+INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `valid_until`, `status_service`, `created_at`, `updated_at`) VALUES
+(5, 1, 1, 'SV002', 'AC001', 'indramayu', '3000', 'On Process Guaranted', '2020-02-26', '2020-02-26', '2020-02-20', 'Done', NULL, '2020-02-26 07:53:43'),
+(6, 1, 1, 'SV001', 'AC001', 'indramayu', '3000', 'valid', '2020-02-21', NULL, NULL, 'Done', '2020-02-19 19:44:06', '2020-02-21 09:16:55');
 
 -- --------------------------------------------------------
 
@@ -222,7 +232,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alamat`, `email_verified_at`) VALUES
-(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL);
+(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL),
+(2, 'arip', 'arip@gmail.com', '089678', 'indramayu', NULL);
 
 --
 -- Indexes for dumped tables
@@ -313,7 +324,7 @@ ALTER TABLE `estimasi`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `rating`
@@ -325,7 +336,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id_service` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_service` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sk`
@@ -343,7 +354,7 @@ ALTER TABLE `teknisi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
