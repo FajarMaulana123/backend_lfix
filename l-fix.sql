@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2020 at 10:41 AM
+-- Generation Time: Feb 26, 2020 at 11:09 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -171,8 +171,9 @@ CREATE TABLE `service` (
 --
 
 INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `valid_until`, `status_service`, `created_at`, `updated_at`) VALUES
-(5, 1, 1, 'SV002', 'AC001', 'indramayu', '3000', 'On Process Guaranted', '2020-02-26', '2020-02-26', '2020-02-20', 'Done', NULL, '2020-02-26 07:53:43'),
-(6, 1, 1, 'SV001', 'AC001', 'indramayu', '3000', 'valid', '2020-02-21', NULL, NULL, 'Done', '2020-02-19 19:44:06', '2020-02-21 09:16:55');
+(5, 1, 1, 'SV002', 'AC001', 'indramayu', '3000', 'Valid', '2020-02-26', '2020-02-26', '2020-02-20', 'Done', '2020-02-25 17:00:00', '2020-02-26 07:53:43'),
+(6, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, NULL, NULL, NULL, 'On Process', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
+(8, 1, 1, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -336,7 +337,7 @@ ALTER TABLE `rating`
 -- AUTO_INCREMENT for table `service`
 --
 ALTER TABLE `service`
-  MODIFY `id_service` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_service` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `sk`
