@@ -30,13 +30,14 @@ $router->post('/rating', 'userController@rating');
 $router->post('/cancel_damage', 'userController@cancel_damage');
 $router->post('/confirm_damage', 'userController@confirm_damage');
 $router->post('/data_guarantee', 'userController@data_guarantee');
+$router->post('/claim_guarantee', 'userController@claim_guarantee');
 
 //teknisi
 $router->get('/api/teknisi/dataservice', 'teknisiController@dataservice');
 $router->post('/api/teknisi/ambilservice', 'teknisiController@ambilservice');
 $router->post('/api/teknisi/kerusakan', 'teknisiController@kerusakan');
 $router->post('/api/teknisi/servicedone', 'teknisiController@servicedone');
-$router->post('/api/teknisi/datakerusakan', 'teknisiController@datateknisi');
+$router->post('/api/teknisi/datakerusakan', 'teknisiController@datakerusakan');
 $router->post('/api/teknisi/rating', 'teknisiController@rating');
 
 

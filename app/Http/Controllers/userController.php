@@ -170,36 +170,24 @@ class userController extends Controller
         'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian',
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
+        ->orderBy('service.id_service', 'ASC')
         ->get();
 
-        // dd($service);
+        
         $coba = $service->groupBy('id_service');
-        // dd($coba->kode_service);
-
-
-        
-        // $i =0;
-        // foreach ($coba as $services){
-        //   $damege[$i] = [
-        //     'jenis' => $services->kerusakan,
-        //     'harga' => $services->harga,
-        //   ];
-        //   $i++;
-        // } 
-
-        
-        // dd($kerusakan);
         
         foreach ($coba as $services){
-          $i = 0;
-          // $kerusakan = M_Kerusakan::where('kode_service', $service[]->kode_service)->get();
-
-          for ($a=0; $a < sizeof($services); $a++) { 
-            $damege[$a] = [
-               'jenis' => $services[$a]->kerusakan,
-               'harga' => $services[$a]->harga
-            ];
-            
+          $i = 0;  
+          // dd($services);
+          if($services[0]->kerusakan != null){
+            for ($a=0; $a < sizeof($services); $a++) { 
+              $damege[$a] = [
+                'jenis' => $services[$a]->kerusakan,
+                'harga' => $services[$a]->harga
+              ];
+            }
+          }else{
+            $damege = [];
           }
 
           // dd($service[$i]->kode_service);
@@ -212,6 +200,71 @@ class userController extends Controller
           // } else {
           //   $status_garansi = 'expire';
           // }
+          // dd($services[1]);
+          if($services[0]->id_teknisi == null){
+                        
+            $data[] = [
+              'idService' => $services[$i]->id_service,
+              'status' => $services[$i]->status_service,
+              'kode_service' => $services[$i]->kode_service,
+              'kode_barang' => $services[$i]->kode_barang,
+              'kategori' => $services[$i]->jenis_barang,
+              'lokasiPelanggan' => $services[$i]->lokasi,
+              'startDate' => $services[$i]->start_date,
+              'endDate' => $services[$i]->end_date,
+              'teknisi' => null,
+              'damage' => null,
+              'guarantee' => null
+            ];   
+            
+          } 
+
+          echo count($damege);
+          if($services[0]->id_teknisi != null && count($damege) == 0 &&  $services[0]->status_garansi == null){
+            // dd(count($damege));
+            $data[] = [
+              'idService' => $services[$i]->id_service,
+              'status' => $services[$i]->status_service,
+              'kode_service' => $services[$i]->kode_service,
+              'kode_barang' => $services[$i]->kode_barang,
+              'kategori' => $services[$i]->jenis_barang,
+              'lokasiPelanggan' => $services[$i]->lokasi,
+              'startDate' => $services[$i]->start_date,
+              'endDate' => $services[$i]->end_date,
+              'teknisi' => [
+                  'namaTeknisi' => $services[$i]->t_nama,
+                  'lokasiTeknisi' => $services[$i]->t_alamat,
+                  'specialist' => $services[$i]->t_keahlian,
+              ],
+              'damage' => null,
+              'guarantee' => null,
+                  
+              
+            ];
+          }else if($services[0]->id_teknisi != null && count($damege) != 0 &&  $services[0]->status_garansi == null){
+            // dd(count($damege));
+            $data[] = [
+              'idService' => $services[$i]->id_service,
+              'status' => $services[$i]->status_service,
+              'kode_service' => $services[$i]->kode_service,
+              'kode_barang' => $services[$i]->kode_barang,
+              'kategori' => $services[$i]->jenis_barang,
+              'lokasiPelanggan' => $services[$i]->lokasi,
+              'startDate' => $services[$i]->start_date,
+              'endDate' => $services[$i]->end_date,
+              'teknisi' => [
+                  'namaTeknisi' => $services[$i]->t_nama,
+                  'lokasiTeknisi' => $services[$i]->t_alamat,
+                  'specialist' => $services[$i]->t_keahlian,
+              ],
+              'damage' => $damege,
+              'guarantee' => null,
+                  
+              
+            ];
+          }
+
+          if ($services[0]->id_teknisi != null && count($damege) != null && $services[0]->status_garansi != null){
 
           $data[] = [
             'idService' => $services[$i]->id_service,
@@ -234,14 +287,14 @@ class userController extends Controller
                 'status' => $services[$i]->status_garansi,
                 'valid_until' => $services[$i]->valid_until,
             ]
-                
-            
           ];
-          $damege = [];
+        }
 
+          $damege = [];
         $i++;
         }
-        
+      
+        // dd();
         if ($service) {
           return response()->json([
               'success' => true,
@@ -261,11 +314,11 @@ class userController extends Controller
     public function confirm_teknisi(Request $request){
 
         $id_service = $request->input('id_service');
-        $start_date = date('Y-m-d');
+       
         $status = 'On Process';
         
         $data = M_Service::where('id_service', $id_service)->update([
-            'start_date' => $start_date,
+            
             'status_service' => $status,
         ]);
 
@@ -326,9 +379,9 @@ class userController extends Controller
 
     public function confirm_damage(Request $request){
         $id = $request->input('id_service');
-        $total = $request->input('total_harga');
+        $start_date = date('Y-m-d');
         $data = M_Service::where('id_service', $id)->update([
-            'total_harga' => $total,
+            'start_date' => $start_date,
         ]);
         if ($data) {
           return response()->json([
@@ -373,29 +426,39 @@ class userController extends Controller
 
     public function data_guarantee (Request $request){
         $id_user = $request->input('userId');
+        $cek = M_Service::where('id', $id_user)->get();
+        foreach ($cek as $ceks){
+        if ($ceks->valid_until < date('Y-m-d') && $ceks->valid_until != null){
+          M_service::where('id_service', $ceks->id_service)->update([
+            'status_garansi' => 'Expired',
+          ]);
+        }
+      }
         $service = M_Service::leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
         ->join('users', 'service.id', '=', 'users.id')
         ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
         ->leftjoin('kerusakan', 'service.kode_service', '=', 'kerusakan.kode_service')
         ->where('service.id', $id_user )
-        ->whereNotNull('service.status_garansi')
+        ->where('service.status_garansi','!=', 'null')
         ->select('service.id_service', 'service.id', 'service.id_teknisi', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
-        'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date', 'service.status_service',
+        'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date','service.valid_until', 'service.status_service',
         'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian',
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
         ->get();
-        
+        // dd($service);
         $coba = $service->groupBy('id_service');
         
         
         
-        
+        if(count($service) != 0){
+
         foreach ($coba as $services){
           $i = 0;
           $dd = $services[$i]->status_garansi;
           // dd($dd);
           // if($services[$i]->status_garansi != null){
+            
             for ($a=0; $a < sizeof($services); $a++) { 
               $damege[$a] = [
                  'jenis' => $services[$a]->kerusakan,
@@ -403,22 +466,15 @@ class userController extends Controller
               ];
               
             }
-            // if($services[$i]->status_garansi == null){
-            //   if ($service) {
-            //     return response()->json([
-            //         'success' => true,
-            //         'message' => 'data kosong',
-                    
-            //     ], 200);
-            //   }
-            // }
+            
+
 
           
             // if ($services[$i]->status_garansi != null){
             $data[] = [
               'id_guarantee' => $services[$i]->id_service,
               'status' => $services[$i]->status_garansi,
-              'valid_until' => $services[$i]->end_date,
+              'valid_until' => $services[$i]->valid_until,
               'service' => [
                 'idService' => $services[$i]->id_service,
                 'status' => $services[$i]->status_service,
@@ -439,18 +495,42 @@ class userController extends Controller
             
 
             $damege = [];
+
+            
           // }
 
           
 
         $i++;
-        }
+        }             
+      }
+
         
-        if ($service) {
+        if (count($service) != 0) {
           return response()->json([
               'success' => true,
               'message' => 'data ditemukan',
               'data' => $data,
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+
+    }
+
+    public function claim_guarantee(Request $request){
+        $id_service = $request->input('id_service');
+        $data = M_Service::where('id_service',$id_service)->update([
+            'status_garansi' => 'On Process Guaranted',
+        ]);
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data disimpan',
           ], 200);
         } else {
           return response()->json([

@@ -63,21 +63,32 @@ class teknisiController extends Controller
     }
 
     public function kerusakan(Request $request){
-        $kode_service = $request->input('kode_service');
-        $kerusakan = $request->input('kerusakan');
-        $harga = $request->input('harga');
+        // $kode_service = $request->input('kode_service');
+        // $kerusakan = $request->input('kerusakan');
+        // $harga = $request->input('harga');
+        $kerusakan = $request->input('data');
+        $total = 0;
+        // dd($data);
+        foreach ($kerusakan as $tt){
+            $data = new M_Kerusakan;
+            $data->kode_service = $tt['kode_service'];
+            $data->harga = $tt['harga'];
+            $data->kerusakan = $tt['kerusakan'];
+            $data->save();
+            $total += $tt['harga']; 
+            $kode = $tt['kode_service'];
+        }
 
-        $data = new M_Kerusakan;
-        $data->kode_service = $kode_service;
-        $data->harga = $harga;
-        $data->kerusakan = $kerusakan;
-        $data->save();
+        $service = M_Service::where('kode_service', $kode)->update([
+            'total_harga' => $total,
+        ]);
+        
+        
 
         if($data){
         return response()->json([
             'success' => true,
             'message' => 'data tersimpan',
-            'data' => $data
         ], 200);
         } else {
         return response()->json([
@@ -88,7 +99,7 @@ class teknisiController extends Controller
         }
     }
 
-    public function datakerusakan(){
+    public function datakerusakan(Request $request){
         $kode_service = $request->input('kode_service');
         $data = M_Kerusakan::where('kode_service', $kode_service)->get();
         if($data){
@@ -110,11 +121,13 @@ class teknisiController extends Controller
         $kode_service = $request->input('kode_service');
         $date = date('Y-m-d');
         $status = 'Done';
-        $total = $request->input('total_harga');
+        $status_garansi = 'Valid';
+        $tgl2 = date('Y-m-d', strtotime('+1 month', strtotime($date)));
         $data = M_Service::where('kode_service', $kode_service)->update([
             'end_date' => $date,
-            'status' => $status,
-            'total_harga' => $total,
+            'status_service' => $status,
+            'status_garansi' => $status_garansi,
+            'valid_until' => $tgl2,
         ]);
         if($data){
         return response()->json([
