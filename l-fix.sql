@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2020 at 06:15 PM
+-- Generation Time: Feb 26, 2020 at 06:38 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -173,8 +173,8 @@ CREATE TABLE `service` (
 
 INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `valid_until`, `status_teknisi`, `status_service`, `created_at`, `updated_at`) VALUES
 (5, 1, 1, 'SV002', 'AC001', 'indramayu', '3000', 'Expired', '2020-02-26', '2020-02-26', '2020-02-20', NULL, 'Done', '2020-02-25 17:00:00', '2020-02-26 16:11:59'),
-(6, 1, 1, 'SV001', 'AC001', 'indramayu', NULL, NULL, '2020-02-27', NULL, NULL, 'Doing services', 'On Process', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
-(8, 1, 1, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, 'On the way', 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00');
+(6, 1, 1, 'SV001', 'AC001', 'indramayu', '3000', NULL, NULL, NULL, NULL, 'Need confirmation', 'On Process', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
+(8, 1, 1, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, NULL, 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00');
 
 -- --------------------------------------------------------
 
