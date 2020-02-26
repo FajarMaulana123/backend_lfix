@@ -219,7 +219,11 @@ class userController extends Controller
             
           } 
 
+<<<<<<< HEAD
+
+=======
           // echo count($damege);
+>>>>>>> 4c443c5f308001133bcaf6363a79a6d1cf6e0541
           if($services[0]->id_teknisi != null && count($damege) == 0 &&  $services[0]->status_garansi == null){
             // dd(count($damege));
             $data[] = [
