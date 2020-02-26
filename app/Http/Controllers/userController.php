@@ -363,6 +363,10 @@ class userController extends Controller
     public function cancel_damage(Request $request){
         $kode_service = $request->input('kode_service');
         $data = M_Kerusakan::where('kode_service', $kode_service)->delete();
+        $service = M_Service::where('kode_service', $kode_service)->update([
+            'total_harga' => null,
+        ]);
+
         if ($data) {
           return response()->json([
               'success' => true,
