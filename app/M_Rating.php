@@ -11,7 +11,7 @@ class M_Rating extends Model
 
     protected $table = 'rating';
     protected $primaryKey = 'id_rating';
-    protected $fillable = ['id_rating', 'kode_service', 'id_user', 'rating','feedback', 'id_teknisi'];
+    protected $fillable = ['id_rating', 'kode_service', 'id_user', 'rating','feedback', 'id_teknisi', 'rated'];
 
 }
  

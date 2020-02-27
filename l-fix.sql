@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2020 at 05:02 PM
+-- Generation Time: Feb 27, 2020 at 05:14 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -231,7 +231,6 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -240,9 +239,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alamat`, `email_verified_at`, `remember_token`) VALUES
-(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL, ''),
-(2, 'arip', 'arip@gmail.com', '089678', 'indramayu', NULL, '');
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `email_verified_at`, `remember_token`) VALUES
+(1, 'fajar', 'fajar@gmail.com', '08981360788', NULL, ''),
+(2, 'arip', 'arip@gmail.com', '089678', NULL, '');
 
 --
 -- Indexes for dumped tables
