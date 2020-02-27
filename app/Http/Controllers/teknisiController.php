@@ -24,8 +24,31 @@ class teknisiController extends Controller
     // }
 
     public function dataservice(){
-        $data = M_Service::where('id_teknisi', null)->get();
-        if($data){
+        $service = M_Service::join('users', 'service.id', '=', 'users.id')
+        ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
+        ->where('service.id_teknisi', '=', null)
+        ->select('service.id_service', 'service.id', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
+        'users.name', 'users.phone',
+        'barang.kode_barang', 'barang.jenis_barang')
+        ->get();
+
+        $coba = $service->groupBy('id_service');
+        foreach ($coba as $services){
+            $i = 0;
+            $data[] = [
+                'idService' => $services[$i]->id_service,
+                'kode_service' => $services[$i]->kode_service,
+                'kode_barang' => $services[$i]->kode_barang,
+                'kategori' => $services[$i]->jenis_barang,
+                'lokasiservice' => $services[$i]->lokasi,
+                'namauser' => $services[$i]->name,
+                'no_hp' => $services[$i]->phone,
+              ];
+  
+          $i++;
+          }     
+
+        if($service){
           return response()->json([
               'success' => true,
               'message' => 'data ditemukan',
@@ -62,25 +85,25 @@ class teknisiController extends Controller
           }
     }
 
-    public function pergi (Request $request){
-        $kode_service = $request->input('kode_service');
-        $data = M_Service::where('kode_service', $kode_service)->update([
-            'status_teknisi' => 'On the way',
-        ]);
-        if($data){
-            return response()->json([
-                'success' => true,
-                'message' => 'teknisi on the way',
-            ], 200);
-        } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'data tidak ditemukan',
-            'data' => ''
-        ], 404);
-        }
+    // public function pergi (Request $request){
+    //     $kode_service = $request->input('kode_service');
+    //     $data = M_Service::where('kode_service', $kode_service)->update([
+    //         'status_teknisi' => 'On the way',
+    //     ]);
+    //     if($data){
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'teknisi on the way',
+    //         ], 200);
+    //     } else {
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'data tidak ditemukan',
+    //         'data' => ''
+    //     ], 404);
+    //     }
         
-    }
+    // }
 
     public function kerusakan(Request $request){
         // $kode_service = $request->input('kode_service');

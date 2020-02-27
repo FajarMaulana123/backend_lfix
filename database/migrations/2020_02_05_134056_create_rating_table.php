@@ -19,6 +19,7 @@ class CreateRatingTable extends Migration
             $table->integer('id_user');
             $table->String('rating');
             $table->String('feedback');
+            $table->string('rated');
         });
     }
 

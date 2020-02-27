@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2020 at 07:44 PM
+-- Generation Time: Feb 27, 2020 at 05:19 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -140,7 +140,8 @@ CREATE TABLE `rating` (
   `kode_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL,
   `rating` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `feedback` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `feedback` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rated` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -174,7 +175,7 @@ CREATE TABLE `service` (
 INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_barang`, `lokasi`, `total_harga`, `status_garansi`, `start_date`, `end_date`, `valid_until`, `status_teknisi`, `status_service`, `created_at`, `updated_at`) VALUES
 (5, 1, 1, 'SV002', 'AC001', 'indramayu', '3000', 'Expired', '2020-02-26', '2020-02-26', '2020-02-20', NULL, 'Done', '2020-02-25 17:00:00', '2020-02-26 16:11:59'),
 (6, 1, 1, 'SV001', 'AC001', 'indramayu', '3000', NULL, NULL, NULL, NULL, 'Need confirmation', 'On Process', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
-(8, 1, 1, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, NULL, 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00'),
+(8, 1, NULL, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, NULL, 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00'),
 (9, 1, 1, 'SV004', 'MC001', 'jatibarang', NULL, NULL, NULL, NULL, NULL, 'On the way', 'On Process', '2020-02-26 17:00:00', '2020-02-26 17:00:00');
 
 -- --------------------------------------------------------
@@ -204,6 +205,7 @@ CREATE TABLE `teknisi` (
   `t_keahlian` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `t_ktp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `t_selfi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating_teknisi` float DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -212,8 +214,8 @@ CREATE TABLE `teknisi` (
 -- Dumping data for table `teknisi`
 --
 
-INSERT INTO `teknisi` (`id_teknisi`, `t_nama`, `t_email`, `t_alamat`, `t_hp`, `t_keahlian`, `t_ktp`, `t_selfi`, `created_at`, `updated_at`) VALUES
-(1, 'sofyan', 'sofyan@gmail.com', 'indramayu', '089765846', 'Service AC', 'ktp.jpg', 'selfi.jpg', '2020-02-06 17:00:00', '2020-02-19 17:00:00');
+INSERT INTO `teknisi` (`id_teknisi`, `t_nama`, `t_email`, `t_alamat`, `t_hp`, `t_keahlian`, `t_ktp`, `t_selfi`, `rating_teknisi`, `created_at`, `updated_at`) VALUES
+(1, 'sofyan', 'sofyan@gmail.com', 'indramayu', '089765846', 'Service AC', 'ktp.jpg', 'selfi.jpg', NULL, '2020-02-06 17:00:00', '2020-02-19 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -227,16 +229,17 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alamat`, `email_verified_at`) VALUES
-(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL),
-(2, 'arip', 'arip@gmail.com', '089678', 'indramayu', NULL);
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alamat`, `email_verified_at`, `remember_token`) VALUES
+(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL, ''),
+(2, 'arip', 'arip@gmail.com', '089678', 'indramayu', NULL, '');
 
 --
 -- Indexes for dumped tables
