@@ -34,6 +34,7 @@ class userController extends Controller
         $data->name = $request->input('name');
         $data->email = $request->input('email');
         $data->phone = $request->input('phone');
+        $data->alamat = $request->input('address');
         $data->save();
 
         if ($data) {
