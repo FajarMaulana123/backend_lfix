@@ -112,7 +112,6 @@ class adminController extends Controller
         $data->kode_barang = $request->input('kode_barang');
         $data->est_kerusakan = $request->input('est_kerusakan');
         $data->harga = $request->input('harga');
-        $data->jenis_barang = $request->input('jenis_barang');
         $data->save();
 
         if ($data) {

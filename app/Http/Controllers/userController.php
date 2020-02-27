@@ -55,12 +55,9 @@ class userController extends Controller
         // dd($request);
         // $data = new M_User();
         // $email = "coba";
-        $data = M_User::where('phone',$request->phone)->first();
-        if ($data) {
-          $token = M_User::where('phone',$request->phone)->update([
-            'status_service' => $status,
-          ]);
-        }
+        
+        $data = M_User::where('phone',$request->input('phone'))->first();
+        
         // dd($data);
 
         if ($data) {
@@ -100,6 +97,8 @@ class userController extends Controller
     }
 
     public function kategoriBarang(){
+
+        $get = M_Barang::all();
         
         $data = M_Barang::join('estimasi', 'barang.kode_barang', '=', 'estimasi.kode_barang')
                 ->orderBy('estimasi.est_kerusakan', 'ASC')
@@ -107,7 +106,7 @@ class userController extends Controller
 
         $barang = $data->groupBy('jenis_barang');
         
-        if (count($data) != 0){
+        if (count($get) != 0){
         foreach ($barang as $key) {
           $i = 0;    
           
@@ -133,7 +132,7 @@ class userController extends Controller
         
 
 
-        if (count($data) != 0) {
+        if (count($get) != 0) {
           return response()->json([
               'success' => true,
               'message' => 'data ditemukan',
@@ -193,7 +192,9 @@ class userController extends Controller
 
     public function dataservice(Request $request){
         $id_user = $request->input('userId');
-      
+        
+        $get = M_Service::where('id', $id_user)->get();
+
         $service = M_Service::leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
         ->join('users', 'service.id', '=', 'users.id')
         ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
@@ -207,9 +208,11 @@ class userController extends Controller
         ->orderBy('service.id_service', 'ASC')
         ->get();
 
+
         
         $coba = $service->groupBy('id_service');
-        
+        // dd($data);
+        if (count($get) != 0){
         foreach ($coba as $services){
           $i = 0;  
           // dd($services);
@@ -336,9 +339,10 @@ class userController extends Controller
           $damege = [];
         $i++;
         }
+      }
       
         // dd();
-        if ($service) {
+        if (count($get) != 0){
           return response()->json([
               'success' => true,
               'message' => 'data ditemukan',
@@ -486,7 +490,7 @@ class userController extends Controller
     {
       $data = M_Teknisi::where('id_teknisi', $id_teknisi)->update([
             'rating_teknisi' => $value,
-        ]);
+      ]);
     }
 
     public function data_guarantee (Request $request){
@@ -507,7 +511,7 @@ class userController extends Controller
         ->where('service.status_garansi','!=', 'null')
         ->select('service.id_service', 'service.id', 'service.id_teknisi', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
         'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date','service.valid_until', 'service.status_service',
-        'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian',
+        'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian', 'teknisi.t_hp',
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
         ->get();

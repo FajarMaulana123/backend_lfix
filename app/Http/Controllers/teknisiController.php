@@ -46,6 +46,7 @@ class teknisiController extends Controller
     }
     
     public function dataservice(){
+        
         $service = M_Service::join('users', 'service.id', '=', 'users.id')
         ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
         ->where('service.id_teknisi', '=', null)
