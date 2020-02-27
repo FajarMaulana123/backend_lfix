@@ -235,6 +235,7 @@ class userController extends Controller
                   'namaTeknisi' => $services[$i]->t_nama,
                   'lokasiTeknisi' => $services[$i]->t_alamat,
                   'specialist' => $services[$i]->t_keahlian,
+                  'no hp' => $services[$i]->t_hp,
                   'status_teknisi' => $services[$i]->status_teknisi,
               ],
               'damage' => null,
@@ -257,6 +258,7 @@ class userController extends Controller
                   'namaTeknisi' => $services[$i]->t_nama,
                   'lokasiTeknisi' => $services[$i]->t_alamat,
                   'specialist' => $services[$i]->t_keahlian,
+                  'no hp' => $services[$i]->t_hp,
                   'status_teknisi' => $services[$i]->status_teknisi,
               ],
               'damage' => $damege,
@@ -281,6 +283,7 @@ class userController extends Controller
                 'namaTeknisi' => $services[$i]->t_nama,
                 'lokasiTeknisi' => $services[$i]->t_alamat,
                 'specialist' => $services[$i]->t_keahlian,
+                'no hp' => $services[$i]->t_hp,
                 'status_teknisi' => $services[$i]->status_teknisi,
             ],
             'damage' => $damege,
@@ -323,6 +326,7 @@ class userController extends Controller
         $data = M_Service::where('id_service', $id_service)->update([
             
             'status_service' => $status,
+            'status_teknisi' => 'On the way',
         ]);
 
         if ($data) {
@@ -492,6 +496,7 @@ class userController extends Controller
                     'namaTeknisi' => $services[$i]->t_nama,
                     'lokasiTeknisi' => $services[$i]->t_alamat,
                     'specialist' => $services[$i]->t_keahlian,
+                    'no hp' => $services[$i]->t_hp,
                 ],
                 'damage' => $damege,
               ],
