@@ -202,7 +202,7 @@ class userController extends Controller
         ->where('service.id', $id_user)
         ->select('service.id_service', 'service.id', 'service.id_teknisi', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
         'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date', 'service.valid_until', 'service.status_teknisi', 'service.status_service',
-        'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian',
+        'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian','teknisi.t_hp',
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
         ->orderBy('service.id_service', 'ASC')

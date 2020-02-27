@@ -1,18 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
-<<<<<<< HEAD
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2020 at 01:46 PM
+-- Generation Time: Feb 27, 2020 at 05:02 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
-=======
--- Host: localhost
--- Generation Time: Feb 27, 2020 at 08:43 AM
--- Server version: 5.7.24
--- PHP Version: 7.2.19
->>>>>>> 9cc6db689053af52036ab89f41634d4a60e310f7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -135,8 +128,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (52, '2020_01_02_142518_create_teknisi_table', 1),
 (53, '2020_01_02_142739_create_service_table', 1),
 (54, '2020_01_02_143310_create_kerusakan_table', 1),
-(56, '2020_02_21_053249_create_garansi_table', 2),
-(57, '2020_02_05_134056_create_rating_table', 3);
+(55, '2020_02_05_134056_create_rating_table', 1),
+(56, '2020_02_21_053249_create_garansi_table', 2);
 
 -- --------------------------------------------------------
 
@@ -146,21 +139,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `rating` (
   `id_rating` bigint(20) UNSIGNED NOT NULL,
-  `id_teknisi` int(11) DEFAULT NULL,
   `kode_service` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL,
-  `rating` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `feedback` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `rated` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '0'
+  `rating` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `feedback` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rated` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `rating`
---
-
-INSERT INTO `rating` (`id_rating`, `id_teknisi`, `kode_service`, `id_user`, `rating`, `feedback`, `rated`) VALUES
-(1, 1, 'SV002', 1, '4', 'Not good', '1'),
-(2, 1, 'SV005', 1, '3', 'Ntaaps', '1');
 
 -- --------------------------------------------------------
 
@@ -195,11 +179,7 @@ INSERT INTO `service` (`id_service`, `id`, `id_teknisi`, `kode_service`, `kode_b
 (6, 1, 1, 'SV001', 'AC001', 'indramayu', '3000', NULL, NULL, NULL, NULL, 'Need confirmation', 'On Process', '2020-02-19 19:44:06', '2020-02-21 09:16:55'),
 (8, 1, NULL, 'SV003', 'MC001', 'Indramayu', NULL, NULL, NULL, NULL, NULL, NULL, 'Waiting', '2020-02-25 17:00:00', '2020-02-25 17:00:00'),
 (9, 1, 1, 'SV004', 'MC001', 'jatibarang', NULL, NULL, NULL, NULL, NULL, 'On the way', 'On Process', '2020-02-26 17:00:00', '2020-02-26 17:00:00'),
-<<<<<<< HEAD
 (10, 1, 1, 'SV005', 'AC001', 'lohbener', '2000', NULL, '2020-02-27', NULL, NULL, 'Doing service', 'On process', '2020-02-26 17:00:00', '2020-02-26 17:00:00');
-=======
-(10, 1, 1, 'SV005', 'AC001', 'indramayu', '3000', 'Expired', '2020-02-26', '2020-02-26', '2020-02-20', NULL, 'Done', '2020-02-25 17:00:00', '2020-02-26 16:11:59');
->>>>>>> 9cc6db689053af52036ab89f41634d4a60e310f7
 
 -- --------------------------------------------------------
 
@@ -238,7 +218,7 @@ CREATE TABLE `teknisi` (
 --
 
 INSERT INTO `teknisi` (`id_teknisi`, `t_nama`, `t_email`, `t_alamat`, `t_hp`, `t_keahlian`, `t_ktp`, `t_selfi`, `rating_teknisi`, `created_at`, `updated_at`) VALUES
-(1, 'sofyan', 'sofyan@gmail.com', 'indramayu', '089765846', 'Service AC', 'ktp.jpg', 'selfi.jpg', 3.5, '2020-02-06 17:00:00', '2020-02-27 08:18:10');
+(1, 'sofyan', 'sofyan@gmail.com', 'indramayu', '089765846', 'Service AC', 'ktp.jpg', 'selfi.jpg', NULL, '2020-02-06 17:00:00', '2020-02-19 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -253,7 +233,7 @@ CREATE TABLE `users` (
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alamat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `remember_token` text COLLATE utf8mb4_unicode_ci
+  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -261,7 +241,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `alamat`, `email_verified_at`, `remember_token`) VALUES
-(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL, 'KttP5q6AneLG0TZaQt98w509IiswFTWUFUctpPMx'),
+(1, 'fajar', 'fajar@gmail.com', '08981360788', 'indramayu', NULL, ''),
 (2, 'arip', 'arip@gmail.com', '089678', 'indramayu', NULL, '');
 
 --
@@ -353,13 +333,13 @@ ALTER TABLE `estimasi`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id_rating` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_rating` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `service`
