@@ -22,7 +22,7 @@ class CreateTeknisiTable extends Migration
             $table->string('t_keahlian');
             $table->string('t_ktp');
             $table->string('t_selfi');
-            $table->float('rating_teknisi');
+            $table->float('rating_teknisi')->default(0);
             $table->timestamps();
         });
     }

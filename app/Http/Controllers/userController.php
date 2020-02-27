@@ -56,7 +56,33 @@ class userController extends Controller
         // $data = new M_User();
         // $email = "coba";
         $data = M_User::where('phone',$request->phone)->first();
+        if ($data) {
+          $token = M_User::where('phone',$request->phone)->update([
+            'status_service' => $status,
+          ]);
+        }
         // dd($data);
+
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
+    public function updateToken(Request $request){
+
+        $data = M_User::where('id',$request->input('userId'))->update([
+            'remember_token' => $request->input('token'),
+          ]);
 
         if ($data) {
           return response()->json([
@@ -143,6 +169,12 @@ class userController extends Controller
         $data->kode_barang = $barang->kode_barang;
         $data->lokasi = $alamat;
         $data->save();
+
+        $dataRate = new M_Rating();
+        $dataRate->kode_service = $kode;
+        $dataRate->id_user = $pemilik->id;
+        $dataRate->rated = '0';
+        $dataRate->save();
 
         if ($data) {
             return response()->json([
@@ -238,6 +270,7 @@ class userController extends Controller
                   'lokasiTeknisi' => $services[$i]->t_alamat,
                   'specialist' => $services[$i]->t_keahlian,
                   'no hp' => $services[$i]->t_hp,
+                  'rating' => $services[$i]->rating_teknisi,
                   'status_teknisi' => $services[$i]->status_teknisi,
               ],
               'damage' => null,
@@ -261,6 +294,7 @@ class userController extends Controller
                   'lokasiTeknisi' => $services[$i]->t_alamat,
                   'specialist' => $services[$i]->t_keahlian,
                   'no hp' => $services[$i]->t_hp,
+                  'rating' => $services[$i]->rating_teknisi,
                   'status_teknisi' => $services[$i]->status_teknisi,
               ],
               'damage' => $damege,
@@ -286,6 +320,7 @@ class userController extends Controller
                 'lokasiTeknisi' => $services[$i]->t_alamat,
                 'specialist' => $services[$i]->t_keahlian,
                 'no hp' => $services[$i]->t_hp,
+                'rating' => $services[$i]->rating_teknisi,
                 'status_teknisi' => $services[$i]->status_teknisi,
             ],
             'damage' => $damege,
@@ -411,18 +446,29 @@ class userController extends Controller
     public function rating(Request $request){
         
         $kode_service = $request->input('kode_service');
-        $reviewer = $request->input('reviewer');
         $rating = $request->input('rating');
         $feedback = $request->input('feedback');
 
-        $data = new M_Rating();
-        $data->kode_service = $kode_service;
-        $data->id_user = $reviewer;
-        $data->rating = $rating;
-        $data->feedback = $feedback;
-        $data->save();
+        $data = M_Rating::where('kode_service', $kode_service)->update([
+            'rating' => $rating,
+            'rated' => '1',
+            'feedback' => $feedback
+        ]);
 
-        if ($data) {
+        $get = M_Rating::where('kode_service', $kode_service)->first();
+        $id_teknisi = $get->id_teknisi;
+        $dataRate = M_Rating::where('id_teknisi', $id_teknisi)->get();
+        
+        $rate = 0;
+        foreach ($dataRate as $value) {
+          $rate += $value->rating;
+        }
+
+        $rate /= count($dataRate);
+
+        $this->updateRating($id_teknisi, $rate);
+
+        if ($get) {
             return response()->json([
                 'success' => true,
                 'message' => 'Rating Success !'
@@ -434,6 +480,13 @@ class userController extends Controller
                 'data' => ''
             ], 404);
           }
+    }
+
+    public function updateRating($id_teknisi, $value)
+    {
+      $data = M_Teknisi::where('id_teknisi', $id_teknisi)->update([
+            'rating_teknisi' => $value,
+        ]);
     }
 
     public function data_guarantee (Request $request){
@@ -499,6 +552,7 @@ class userController extends Controller
                     'lokasiTeknisi' => $services[$i]->t_alamat,
                     'specialist' => $services[$i]->t_keahlian,
                     'no hp' => $services[$i]->t_hp,
+                    'rating' => $services[$i]->rating_teknisi,
                 ],
                 'damage' => $damege,
               ],
