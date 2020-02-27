@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2020 at 04:56 AM
+-- Generation Time: Feb 27, 2020 at 05:19 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -205,6 +205,7 @@ CREATE TABLE `teknisi` (
   `t_keahlian` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `t_ktp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `t_selfi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating_teknisi` float DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -213,8 +214,8 @@ CREATE TABLE `teknisi` (
 -- Dumping data for table `teknisi`
 --
 
-INSERT INTO `teknisi` (`id_teknisi`, `t_nama`, `t_email`, `t_alamat`, `t_hp`, `t_keahlian`, `t_ktp`, `t_selfi`, `created_at`, `updated_at`) VALUES
-(1, 'sofyan', 'sofyan@gmail.com', 'indramayu', '089765846', 'Service AC', 'ktp.jpg', 'selfi.jpg', '2020-02-06 17:00:00', '2020-02-19 17:00:00');
+INSERT INTO `teknisi` (`id_teknisi`, `t_nama`, `t_email`, `t_alamat`, `t_hp`, `t_keahlian`, `t_ktp`, `t_selfi`, `rating_teknisi`, `created_at`, `updated_at`) VALUES
+(1, 'sofyan', 'sofyan@gmail.com', 'indramayu', '089765846', 'Service AC', 'ktp.jpg', 'selfi.jpg', NULL, '2020-02-06 17:00:00', '2020-02-19 17:00:00');
 
 -- --------------------------------------------------------
 
