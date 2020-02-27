@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\M_User;
 use App\M_Barang;
+use App\M_Teknisi;
 use App\M_Estimasi;
 use App\M_Service;
 use App\M_Rating;
@@ -23,6 +24,27 @@ class teknisiController extends Controller
     //     //
     // }
 
+    public function login(Request $request){
+        $hp = $request->input('no');
+        // dd($hp);
+        $data = M_Teknisi::where('t_hp', '=', $hp)->first();
+        
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'data ditemukan',
+                'data' => $data
+            ], 200);
+          } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'data tidak ditemukan',
+                'data' => ''
+            ], 404);
+          }
+
+    }
+    
     public function dataservice(){
         $service = M_Service::join('users', 'service.id', '=', 'users.id')
         ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
