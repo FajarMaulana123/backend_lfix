@@ -209,22 +209,22 @@ class teknisiController extends Controller
         }
     }
 
-    public function rating(Request $request){
-        $kode_service = $request->input('kode_service');
-        $data = M_Rating::where('kode_service', $kode_service)->first();
-        if($data){
-        return response()->json([
-            'success' => true,
-            'message' => 'data ditemukan',
-            'data' => $data
-        ], 200);
-        } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'data tidak ditemukan',
-            'data' => ''
-        ], 404);
-        }
-    }
+    // public function rating(Request $request){
+    //     $kode_service = $request->input('kode_service');
+    //     $data = M_Rating::where('kode_service', $kode_service)->first();
+    //     if($data){
+    //     return response()->json([
+    //         'success' => true,
+    //         'message' => 'data ditemukan',
+    //         'data' => $data
+    //     ], 200);
+    //     } else {
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'data tidak ditemukan',
+    //         'data' => ''
+    //     ], 404);
+    //     }
+    // }
 
 }
