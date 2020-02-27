@@ -363,14 +363,12 @@ class userController extends Controller
         }     
     }
 
-    public function cancel_damage(Request $request){
+    public function cancel_service(Request $request){
         $kode_service = $request->input('kode_service');
-        $data = M_Kerusakan::where('kode_service', $kode_service)->delete();
-        $service = M_Service::where('kode_service', $kode_service)->update([
-            'total_harga' => null,
-        ]);
+        
+        $service = M_Service::where('kode_service', $kode_service)->delete();
 
-        if ($data) {
+        if ($service) {
           return response()->json([
               'success' => true,
               'message' => 'damage telah dicancel',
@@ -389,6 +387,7 @@ class userController extends Controller
         $start_date = date('Y-m-d');
         $data = M_Service::where('id_service', $id)->update([
             'start_date' => $start_date,
+            'status_teknisi' => 'Doing service',
         ]);
         if ($data) {
           return response()->json([

@@ -27,7 +27,7 @@ $router->post('/data_service', 'userController@dataservice');
 $router->post('/confirm_teknisi', 'userController@confirm_teknisi');
 $router->post('/cancel_teknisi', 'userController@cancel_teknisi');
 $router->post('/rating', 'userController@rating');
-$router->post('/cancel_damage', 'userController@cancel_damage');
+$router->post('/cancel_service', 'userController@cancel_service');
 $router->post('/confirm_damage', 'userController@confirm_damage');
 $router->post('/data_guarantee', 'userController@data_guarantee');
 $router->post('/claim_guarantee', 'userController@claim_guarantee');
@@ -40,7 +40,7 @@ $router->post('/api/teknisi/servicedone', 'teknisiController@servicedone');
 $router->post('/api/teknisi/datakerusakan', 'teknisiController@datakerusakan');
 $router->post('/api/teknisi/rating', 'teknisiController@rating');
 $router->post('/api/teknisi/pergi', 'teknisiController@pergi');
-$router->post('/api/teknisi/doingservice', 'teknisiController@doingservice');
+// $router->post('/api/teknisi/doingservice', 'teknisiController@doingservice');
 
 
 

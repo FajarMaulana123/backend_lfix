@@ -120,24 +120,25 @@ class teknisiController extends Controller
         }
     }
 
-    public function doingservice(Request $request){
-        $kode_service = $request->input('kode_service');
-        $data = M_Service::where('kode_service', $kode_service)->update([
-            'status_teknisi' => 'Doing service',
-        ]);
-        if($data){
-            return response()->json([
-                'success' => true,
-                'message' => 'teknisi dalam proses pengerjaan',
-            ], 200);
-        } else {
-        return response()->json([
-            'success' => false,
-            'message' => 'data tidak ditemukan',
-            'data' => ''
-        ], 404);
-        }
-    }
+    
+    // public function doingservice(Request $request){
+    //     $kode_service = $request->input('kode_service');
+    //     $data = M_Service::where('kode_service', $kode_service)->update([
+    //         'status_teknisi' => 'Doing service',
+    //     ]);
+    //     if($data){
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'teknisi dalam proses pengerjaan',
+    //         ], 200);
+    //     } else {
+    //     return response()->json([
+    //         'success' => false,
+    //         'message' => 'data tidak ditemukan',
+    //         'data' => ''
+    //     ], 404);
+    //     }
+    // }
 
     public function datakerusakan(Request $request){
         $kode_service = $request->input('kode_service');
@@ -161,13 +162,15 @@ class teknisiController extends Controller
         $kode_service = $request->input('kode_service');
         $date = date('Y-m-d');
         $status = 'Done';
+        $status_teknisi = 'Done service';
         $status_garansi = 'Valid';
-        $tgl2 = date('Y-m-d', strtotime('+1 month', strtotime($date)));
+        $tgl2 = date('Y-m-d', strtotime('+2 weeks', strtotime($date)));
         $data = M_Service::where('kode_service', $kode_service)->update([
             'end_date' => $date,
             'status_service' => $status,
             'status_garansi' => $status_garansi,
             'valid_until' => $tgl2,
+            'status_teknisi' => $status_teknisi,
         ]);
         if($data){
         return response()->json([
