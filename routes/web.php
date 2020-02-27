@@ -21,6 +21,7 @@
 // Endpoint Permintaan User
 $router->post('/register', 'userController@register');
 $router->post('/login', 'userController@login');
+$router->post('/updateToken', 'userController@updateToken');
 $router->get('/kategoriBarang', 'userController@kategoriBarang');
 $router->post('/service', 'userController@service');
 $router->post('/data_service', 'userController@dataservice');
