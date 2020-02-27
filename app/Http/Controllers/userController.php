@@ -81,6 +81,7 @@ class userController extends Controller
 
         $barang = $data->groupBy('jenis_barang');
         
+        if (count($data) != 0){
         foreach ($barang as $key) {
           $i = 0;    
           
@@ -102,10 +103,11 @@ class userController extends Controller
           
           $i++;
         }
+      }
         
 
 
-        if ($data) {
+        if (count($data) != 0) {
           return response()->json([
               'success' => true,
               'message' => 'data ditemukan',

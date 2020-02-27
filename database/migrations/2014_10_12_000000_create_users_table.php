@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('alamat');
             $table->timestamp('email_verified_at')->nullable();
-            $table->text('remember_token')->nullable();
+            $table->longText('remember_token')->nullable();
         });
     }
 
