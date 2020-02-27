@@ -407,14 +407,20 @@ class userController extends Controller
         $kode_service = $request->input('kode_service');
         $reviewer = $request->input('reviewer');
         $rating = $request->input('rating');
+        $rated = '1';
         $feedback = $request->input('feedback');
 
-        $data = new M_Rating();
-        $data->kode_service = $kode_service;
-        $data->id_user = $reviewer;
-        $data->rating = $rating;
-        $data->feedback = $feedback;
-        $data->save();
+        $data = M_Rating::where('id_service', $id_service)->update([
+            'status_service' => $status,
+        ]);
+
+        // $data = new M_Rating();
+        // $data->kode_service = $kode_service;
+        // $data->id_user = $reviewer;
+        // $data->rating = $rating;
+        // $data->rated = $rated;
+        // $data->feedback = $feedback;
+        // $data->save();
 
         if ($data) {
             return response()->json([
