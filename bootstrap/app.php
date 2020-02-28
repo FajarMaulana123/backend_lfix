@@ -16,6 +16,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 | application as an "IoC" container and router for this framework.
 |
 */
+class_alias(\LaravelFCM\Facades\FCM::class, 'FCM');
 
 $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
@@ -78,6 +79,7 @@ $app->routeMiddleware([
 
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(LaravelFCM\FCMServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*
