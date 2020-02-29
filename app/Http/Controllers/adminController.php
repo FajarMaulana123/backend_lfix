@@ -275,7 +275,9 @@ class adminController extends Controller
     }
 
     public function dashboard(){
-        $barang = 
+        $barang = M_Barang::all();
+        $service = M_Service::all();
+        
     }
 
 }
