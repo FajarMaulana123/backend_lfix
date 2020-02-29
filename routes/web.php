@@ -51,8 +51,8 @@ $router->post('/api/teknisi/login', 'teknisiController@login');
 
 $router->post('/api/admin/addbarang', 'adminController@addbarang');
 $router->get('/api/admin/barang', 'adminController@barang');
-$router->post('/api/admin/updatebarang/{id}', 'adminController@updatebarang');
-$router->get('/api/admin/deletebarang/{id}', 'adminController@deletebarang');
+$router->post('/api/admin/updatebarang/{kode_barang}', 'adminController@updatebarang');
+$router->get('/api/admin/deletebarang/{kode_barang}', 'adminController@deletebarang');
 
 $router->post('/api/admin/addestimasi', 'adminController@addestimasi');
 $router->get('/api/admin/estimasi', 'adminController@estimasi');
@@ -64,3 +64,4 @@ $router->post('/api/admin/daftarteknisi', 'adminController@daftarteknisi');
 $router->get('/api/admin/teknisi', 'adminController@teknisi');
 $router->get('/api/admin/service', 'adminController@service');
 $router->get('/api/admin/users', 'adminController@users');
+$router->get('/api/admin/detail_service/{kode_service}', 'adminController@detail_service');

@@ -68,10 +68,10 @@ class adminController extends Controller
           }
     }
 
-    public function updatebarang(Request $request, $id){
+    public function updatebarang(Request $request, $kode_barang){
         $jenis_barang = $request->input('jenis_barang');
         $icon = $request->input('icon');
-        $data = M_Barang::where('kode_barang', $id)->update([
+        $data = M_Barang::where('kode_barang', $kode_barang)->update([
             'jenis_barang' => $jenis_barang,
             'icon' => $icon,
         ]);
@@ -91,8 +91,8 @@ class adminController extends Controller
         }
     }
 
-    public function deletebarang(Request $request, $id){
-        $data = M_Barang::where('kode_barang', $id)->delete();
+    public function deletebarang(Request $request, $kode_barang){
+        $data = M_Barang::where('kode_barang', $kode_barang)->delete();
         if ($data) {
             return response()->json([
                 'success' => true,
@@ -246,7 +246,7 @@ class adminController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'data ditemukan',
-            'data' => $data
+            'data' => $service
         ], 200);
       } else {
         return response()->json([
@@ -255,6 +255,33 @@ class adminController extends Controller
             'data' => ''
         ], 404);
       }
+    }
+
+    public function detail_service(Request $request, $kode_service){
+        $data = M_Service::leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
+        ->join('users', 'service.id', '=', 'users.id')
+        ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
+        ->leftjoin('kerusakan', 'service.kode_service', '=', 'kerusakan.kode_service')
+        ->where('service.kode_service', $kode_service)
+        ->select('service.id_service', 'service.id', 'service.id_teknisi', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
+        'service.total_harga', 'service.status_garansi', 'service.start_date', 'service.end_date','service.valid_until', 'service.status_service',
+        'teknisi.id_teknisi', 'teknisi.t_nama', 'teknisi.t_alamat', 'teknisi.t_keahlian', 'teknisi.t_hp',
+        'kerusakan.harga', 'kerusakan.kerusakan',
+        'barang.kode_barang', 'barang.jenis_barang')
+        ->get();
+        if($data){
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
     }
 
     public function users(){
