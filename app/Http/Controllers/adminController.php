@@ -198,14 +198,22 @@ class adminController extends Controller
 
      
     public function daftarteknisi(Request $request){
+        $t_selfi = $request->file('t_selfi');
+        $namefile = $t_selfi->getClientOriginalName();
+        $t_selfi->move(public_path('images/teknisi'),$namefile);
+
+        $t_ktp = $request->file('t_ktp');
+        $ktp = $t_ktp->getClientOriginalName();
+        $t_selfi->move(public_path('images/teknisi'),$ktp);
+
         $data = new M_Teknisi();
         $data->t_nama = $request->input('t_nama');
         $data->t_email = $request->input('t_email');
         $data->t_alamat = $request->input('t_alamat');
         $data->t_hp = $request->input('t_hp');
         $data->t_keahlian = $request->input('t_keahlian');
-        $data->t_ktp = $request->input('t_ktp');
-        $data->t_selfi = $request->input('t_selfi');
+        $data->t_ktp = $ktp;
+        $data->t_selfi = $namefile;
         $data->save();
 
         if ($data) {
