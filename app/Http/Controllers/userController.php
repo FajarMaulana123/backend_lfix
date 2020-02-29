@@ -14,6 +14,7 @@ use App\M_Rating;
 use App\M_Kerusakan;
 
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
