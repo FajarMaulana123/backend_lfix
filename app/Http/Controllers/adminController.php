@@ -46,10 +46,14 @@ class adminController extends Controller
 
     
     public function addbarang(Request $request){
+        $gam_produk = $request->file('icon');
+        $namefile = $gam_produk->getClientOriginalName();
+        $gam_produk->move(public_path('images'),$namefile);
+
         $data = new M_Barang();
         $data->kode_barang = $request->input('kode_barang');
         $data->jenis_barang = $request->input('jenis_barang');
-        $data->icon = $request->input('icon');
+        $data->icon = $namefile;
         $data->save();
         // dd($data->kode_barang);
 
@@ -70,17 +74,24 @@ class adminController extends Controller
 
     public function updatebarang(Request $request, $kode_barang){
         $jenis_barang = $request->input('jenis_barang');
-        $icon = $request->input('icon');
-        $data = M_Barang::where('kode_barang', $kode_barang)->update([
+        $data = M_Barang::find($kode_barang);
+        $data->update([
             'jenis_barang' => $jenis_barang,
-            'icon' => $icon,
         ]);
+
+        if ($request->hasFile('icon'))
+        {
+            $gam_produk = $request->file('icon');
+            $namefile = $gam_produk->getClientOriginalName();
+            $gam_produk->move(public_path('images'),$namefile); 
+            $data->icon = $namefile;
+            $data->save();             
+        }   
 
         if ($data) {
           return response()->json([
             'success' => true,
-            'message' => 'data diupdate',
-            'data' => $data
+            'message' => 'data barang diupdate',
           ], 200);
         } else {
           return response()->json([
@@ -97,7 +108,6 @@ class adminController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'data dihapus',
-                'data' => $data
             ], 200);
         } else {
           return response()->json([
@@ -142,7 +152,6 @@ class adminController extends Controller
           return response()->json([
             'success' => true,
             'message' => 'data diupdate',
-            'data' => $data
           ], 200);
         } else {
           return response()->json([
@@ -159,7 +168,6 @@ class adminController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'data dihapus',
-                'data' => $data
             ], 200);
         } else {
           return response()->json([
