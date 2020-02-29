@@ -277,7 +277,28 @@ class adminController extends Controller
     public function dashboard(){
         $barang = M_Barang::all();
         $service = M_Service::all();
+        $teknisi = M_Teknisi::all();
+
+        $data = [
+          'service' => $service,
+          'teknisi' => $teknisi,
+          'barang' => $barang,
+        ];
         
+        if(count($data) != 0){
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+
     }
 
 }
