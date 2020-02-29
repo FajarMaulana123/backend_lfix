@@ -126,7 +126,7 @@ class userController extends Controller
 
           $result[] = [
                   'name' => $key[$i]->jenis_barang,
-                  'image' => 'localhost:8000/images/' . $key[$i]->icon,
+                  'image' => 'https://l-fix.herokuapp.com/images/' . $key[$i]->icon,
                   'jenis_kerusakan' => $jenis_kerusakan
               ];
 

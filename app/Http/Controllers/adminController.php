@@ -51,6 +51,7 @@ class adminController extends Controller
         $data->jenis_barang = $request->input('jenis_barang');
         $data->icon = $request->input('icon');
         $data->save();
+        // dd($data->kode_barang);
 
         if ($data) {
             return response()->json([
@@ -68,11 +69,12 @@ class adminController extends Controller
     }
 
     public function updatebarang(Request $request, $id){
-        $data = M_Barang::where('id_barang', $id)->first();
-        $data->kode_barang = $request->input('kode_barang');
-        $data->jenis_barang = $request->input('jenis_barang');
-        $data->icon = $request->input('icon');
-        $data->save();
+        $jenis_barang = $request->input('jenis_barang');
+        $icon = $request->input('icon');
+        $data = M_Barang::where('kode_barang', $id)->update([
+            'jenis_barang' => $jenis_barang,
+            'icon' => $icon,
+        ]);
 
         if ($data) {
           return response()->json([
@@ -90,8 +92,7 @@ class adminController extends Controller
     }
 
     public function deletebarang(Request $request, $id){
-        $data = M_Barang::where('id_barang', $id)->first();
-        $data->delete();
+        $data = M_Barang::where('kode_barang', $id)->delete();
         if ($data) {
             return response()->json([
                 'success' => true,
@@ -130,12 +131,12 @@ class adminController extends Controller
     }
 
     public function updateestimasi(Request $request, $id){
-        $data = M_Estimasi::where('id_estimasi', $id)->first();
-        $data->kode_barang = $request->input('kode_barang');
-        $data->est_kerusakan = $request->input('est_kerusakan');
-        $data->harga = $request->input('harga');
-        $data->jenis_barang = $request->input('jenis_barang');
-        $data->save();
+      $est_kerusakan = $request->input('est_kerusakan');
+      $harga = $request->input('harga');  
+      $data = M_Estimasi::where('id_estimasi', $id)->update([
+            'est_kerusakan' => $est_kerusakan,
+            'harga' => $harga,
+        ]);
 
         if ($data) {
           return response()->json([
@@ -153,8 +154,7 @@ class adminController extends Controller
     }
 
     public function deleteestimasi(Request $request, $id){
-        $data = M_Estimasi::where('id_estimasi', $id)->first();
-        $data->delete();
+        $data = M_Estimasi::where('id_estimasi', $id)->delete();
         if ($data) {
             return response()->json([
                 'success' => true,
@@ -188,24 +188,7 @@ class adminController extends Controller
         }
     }
 
-    public function tipeestimasi($kode_barang){
-        $data = M_Estimasi::where('kode_barang', $kode_barang)->get();
-
-        if ($data) {
-          return response()->json([
-              'success' => true,
-              'message' => 'data ditemukan',
-              'data' => $data
-          ], 200);
-        } else {
-          return response()->json([
-              'success' => false,
-              'message' => 'data tidak ditemukan',
-              'data' => ''
-          ], 404);
-        }
-    }
-
+     
     public function daftarteknisi(Request $request){
         $data = new M_Teknisi();
         $data->t_nama = $request->input('t_nama');
@@ -248,6 +231,51 @@ class adminController extends Controller
               'data' => ''
           ], 404);
         }
+    }
+
+    Public function service(){
+      $service = M_Service::join('users', 'service.id', '=', 'users.id')
+      ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
+      ->join('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
+      ->select('service.id_service', 'service.id', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
+      'users.name', 'teknisi.t_nama', 'service.start_date', 'service.status_service',
+      'barang.kode_barang', 'barang.jenis_barang')
+      ->get();
+
+      if(count($service) != 0){
+        return response()->json([
+            'success' => true,
+            'message' => 'data ditemukan',
+            'data' => $data
+        ], 200);
+      } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+        ], 404);
+      }
+    }
+
+    public function users(){
+        $data = M_Users::all();
+        if($data){
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
+    public function dashboard(){
+        $barang = 
     }
 
 }

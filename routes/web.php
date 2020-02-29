@@ -49,16 +49,18 @@ $router->post('/api/teknisi/login', 'teknisiController@login');
 
 // EndPoint Coba-coba
 
-$router->post('/addbarang', 'adminController@addbarang');
-$router->get('/barang', 'adminController@barang');
-$router->post('/updatebarang/{id}', 'adminController@updatebarang');
-$router->get('/deletebarang/{id}', 'adminController@deletebarang');
+$router->post('/api/admin/addbarang', 'adminController@addbarang');
+$router->get('/api/admin/barang', 'adminController@barang');
+$router->post('/api/admin/updatebarang/{id}', 'adminController@updatebarang');
+$router->get('/api/admin/deletebarang/{id}', 'adminController@deletebarang');
 
-$router->post('/addestimasi', 'adminController@addestimasi');
-$router->get('/estimasi', 'adminController@estimasi');
-$router->post('/updateestimasi/{id}', 'adminController@updateestimasi');
-$router->get('/deleteestimasi/{id}', 'adminController@deleteestimasi');
-$router->get('/tipeestimasi/{kode_barang}', 'adminController@tipeestimasi');
+$router->post('/api/admin/addestimasi', 'adminController@addestimasi');
+$router->get('/api/admin/estimasi', 'adminController@estimasi');
+$router->post('/api/admin/updateestimasi/{id}', 'adminController@updateestimasi');
+$router->get('/api/admin/deleteestimasi/{id}', 'adminController@deleteestimasi');
+// $router->get('/api/admin/tipeestimasi/{kode_barang}', 'adminController@tipeestimasi');
 
-$router->post('/daftarteknisi', 'adminController@daftarteknisi');
-$router->get('/teknisi', 'adminController@teknisi');
+$router->post('/api/admin/daftarteknisi', 'adminController@daftarteknisi');
+$router->get('/api/admin/teknisi', 'adminController@teknisi');
+$router->get('/api/admin/service', 'adminController@service');
+$router->get('/api/admin/users', 'adminController@users');
