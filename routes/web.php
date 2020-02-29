@@ -63,3 +63,4 @@ $router->get('/api/admin/deleteestimasi/{id}', 'adminController@deleteestimasi')
 $router->post('/api/admin/daftarteknisi', 'adminController@daftarteknisi');
 $router->get('/api/admin/teknisi', 'adminController@teknisi');
 $router->get('/api/admin/service', 'adminController@service');
+$router->get('/api/admin/users', 'adminController@users');

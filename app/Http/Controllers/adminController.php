@@ -238,9 +238,44 @@ class adminController extends Controller
       ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
       ->join('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
       ->select('service.id_service', 'service.id', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
-      'users.name', 'barang.jenis_barang',
+      'users.name', 'teknisi.t_nama', 'service.start_date', 'service.status_service',
       'barang.kode_barang', 'barang.jenis_barang')
       ->get();
+
+      if(count($service) != 0){
+        return response()->json([
+            'success' => true,
+            'message' => 'data ditemukan',
+            'data' => $data
+        ], 200);
+      } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+        ], 404);
+      }
+    }
+
+    public function users(){
+        $data = M_Users::all();
+        if($data){
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
+    public function dashboard(){
+        $barang = 
     }
 
 }
