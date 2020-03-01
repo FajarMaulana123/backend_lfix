@@ -137,39 +137,39 @@ class userController extends Controller
         }
       }
        
-      $optionBuilder = new OptionsBuilder();
-      $optionBuilder->setTimeToLive(60*20);
+      // $optionBuilder = new OptionsBuilder();
+      // $optionBuilder->setTimeToLive(60*20);
 
-      $notificationBuilder = new PayloadNotificationBuilder('Ini Judul');
-      $notificationBuilder->setBody('Ini Isinya')
-                  ->setSound('default');
+      // $notificationBuilder = new PayloadNotificationBuilder('Ini Judul');
+      // $notificationBuilder->setBody('Ini Isinya')
+      //             ->setSound('default');
 
-      $dataBuilder = new PayloadDataBuilder();
-      $dataBuilder->addData(['data' => 'Isi_data']);
+      // $dataBuilder = new PayloadDataBuilder();
+      // $dataBuilder->addData(['data' => 'Isi_data']);
 
-      $option = $optionBuilder->build();
-      $notification = $notificationBuilder->build();
-      $data = $dataBuilder->build();
+      // $option = $optionBuilder->build();
+      // $notification = $notificationBuilder->build();
+      // $data = $dataBuilder->build();
 
-      $token = "fzqSqRIaFm8:APA91bF6OvTRckj8irrQcemp2vGEC2X5Gwzd80Pn5ciM3ZfyQn97nD_TZpIDwdAOF-04yBNNorcNpI2rhrPC50zVJzo9YTyc-bavi_uO7cak0dJPQ_LP53tQ6siQArjxUiqDs70AQwvq";
+      // $token = "fzqSqRIaFm8:APA91bF6OvTRckj8irrQcemp2vGEC2X5Gwzd80Pn5ciM3ZfyQn97nD_TZpIDwdAOF-04yBNNorcNpI2rhrPC50zVJzo9YTyc-bavi_uO7cak0dJPQ_LP53tQ6siQArjxUiqDs70AQwvq";
 
-      $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+      // $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
 
-      $downstreamResponse->numberSuccess();
-      $downstreamResponse->numberFailure();
-      $downstreamResponse->numberModification();
+      // $downstreamResponse->numberSuccess();
+      // $downstreamResponse->numberFailure();
+      // $downstreamResponse->numberModification();
 
-      // return Array - you must remove all this tokens in your database
-      $downstreamResponse->tokensToDelete();
+      // // return Array - you must remove all this tokens in your database
+      // $downstreamResponse->tokensToDelete();
 
-      // return Array (key : oldToken, value : new token - you must change the token in your database)
-      $downstreamResponse->tokensToModify();
+      // // return Array (key : oldToken, value : new token - you must change the token in your database)
+      // $downstreamResponse->tokensToModify();
 
-      // return Array - you should try to resend the message to the tokens in the array
-      $downstreamResponse->tokensToRetry();
+      // // return Array - you should try to resend the message to the tokens in the array
+      // $downstreamResponse->tokensToRetry();
 
-      // return Array (key:token, value:error) - in production you should remove from your database the tokens
-      $downstreamResponse->tokensWithError(); 
+      // // return Array (key:token, value:error) - in production you should remove from your database the tokens
+      // $downstreamResponse->tokensWithError(); 
 
 
         if (count($get) != 0) {
