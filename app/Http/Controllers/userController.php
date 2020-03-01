@@ -634,9 +634,44 @@ class userController extends Controller
 
     public function claim_guarantee(Request $request){
         $id_service = $request->input('id_service');
-        $data = M_Service::where('id_service',$id_service)->update([
-            'status_garansi' => 'On Process Guaranted',
-        ]);
+        $data = M_Service::where('id_service', $id_service)->first();
+        $teknisi = M_Teknisi::where('id_teknisi', $data->id_teknisi)->first();
+        $token_teknisi = $teknisi->remember_token;
+        // $data = M_Service::where('id_service',$id_service)->update([
+        //     'status_garansi' => 'On Process Guaranted',
+        // ]);
+        $optionBuilder = new OptionsBuilder();
+      $optionBuilder->setTimeToLive(60*20);
+
+      $notificationBuilder = new PayloadNotificationBuilder('Ini Judul');
+      $notificationBuilder->setBody('Ini Isinya')
+                  ->setSound('default');
+
+      $dataBuilder = new PayloadDataBuilder();
+      $dataBuilder->addData(['data' => 'Isi_data']);
+
+      $option = $optionBuilder->build();
+      $notification = $notificationBuilder->build();
+      $data = $dataBuilder->build();
+
+      $token = $token_teknisi;
+      $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+
+      $downstreamResponse->numberSuccess();
+      $downstreamResponse->numberFailure();
+      $downstreamResponse->numberModification();
+
+      // return Array - you must remove all this tokens in your database
+      $downstreamResponse->tokensToDelete();
+
+      // return Array (key : oldToken, value : new token - you must change the token in your database)
+      $downstreamResponse->tokensToModify();
+
+      // return Array - you should try to resend the message to the tokens in the array
+      $downstreamResponse->tokensToRetry();
+
+      // return Array (key:token, value:error) - in production you should remove from your database the tokens
+      $downstreamResponse->tokensWithError(); 
         if ($data) {
           return response()->json([
               'success' => true,

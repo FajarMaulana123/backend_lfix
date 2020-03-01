@@ -267,4 +267,25 @@ class teknisiController extends Controller
           ], 404);
         }
     }
+
+    public function updateToken(Request $request){
+
+        $data = M_Teknisi::where('id_teknisi',$request->input('id_teknisi'))->update([
+            'remember_token' => $request->input('token'),
+          ]);
+
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
 }

@@ -42,6 +42,7 @@ $router->post('/api/teknisi/servicedone', 'teknisiController@servicedone');
 $router->post('/api/teknisi/datakerusakan', 'teknisiController@datakerusakan');
 $router->post('/api/teknisi/login', 'teknisiController@login');
 $router->get('/api/teknisi/sk', 'teknisiController@sk');
+$router->post('/api/teknisi/updatetoken', 'teknisiController@updateToken');
 // $router->post('/api/teknisi/rating', 'teknisiController@rating');
 // $router->post('/api/teknisi/pergi', 'teknisiController@pergi');
 // $router->post('/api/teknisi/doingservice', 'teknisiController@doingservice');
