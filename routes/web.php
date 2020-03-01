@@ -57,8 +57,8 @@ $router->get('/api/admin/deletebarang/{kode_barang}', 'adminController@deletebar
 
 $router->post('/api/admin/addestimasi', 'adminController@addestimasi');
 $router->get('/api/admin/estimasi', 'adminController@estimasi');
-$router->post('/api/admin/updateestimasi/{id}', 'adminController@updateestimasi');
-$router->get('/api/admin/deleteestimasi/{id}', 'adminController@deleteestimasi');
+$router->post('/api/admin/updateestimasi/{id_estimasi}', 'adminController@updateestimasi');
+$router->get('/api/admin/deleteestimasi/{id_estimasi}', 'adminController@deleteestimasi');
 // $router->get('/api/admin/tipeestimasi/{kode_barang}', 'adminController@tipeestimasi');
 
 $router->post('/api/admin/daftarteknisi', 'adminController@daftarteknisi');
@@ -67,3 +67,5 @@ $router->get('/api/admin/service', 'adminController@service');
 $router->get('/api/admin/users', 'adminController@users');
 $router->get('/api/admin/detail_service/{kode_service}', 'adminController@detail_service');
 $router->post('/api/admin/addsk', 'adminController@addsk');
+$router->post('/api/admin/updatesk/{id_sk}', 'adminController@updatesk');
+$router->get('/api/admin/deletesk/{id_sk}', 'adminController@deletesk');

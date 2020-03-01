@@ -141,10 +141,10 @@ class adminController extends Controller
           }
     }
 
-    public function updateestimasi(Request $request, $id){
+    public function updateestimasi(Request $request, $id_estimasi){
       $est_kerusakan = $request->input('est_kerusakan');
       $harga = $request->input('harga');  
-      $data = M_Estimasi::where('id_estimasi', $id)->update([
+      $data = M_Estimasi::where('id_estimasi', $id_estimasi)->update([
             'est_kerusakan' => $est_kerusakan,
             'harga' => $harga,
         ]);
@@ -163,8 +163,8 @@ class adminController extends Controller
         }
     }
 
-    public function deleteestimasi(Request $request, $id){
-        $data = M_Estimasi::where('id_estimasi', $id)->delete();
+    public function deleteestimasi(Request $request, $id_estimasi){
+        $data = M_Estimasi::where('id_estimasi', $id_estimasi)->delete();
         if ($data) {
             return response()->json([
                 'success' => true,
@@ -365,6 +365,44 @@ class adminController extends Controller
           return response()->json([
               'success' => false,
               'message' => 'data tidak disimpan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
+    public function updatesk(Request $request, $id_sk){
+      $isi_sk = $request->input('isi_sk');
+      $tipe_sk = $request->input('tipe_sk');  
+      $data = M_Sk::where('id_sk', $id_sk)->update([
+            'isi_sk' => $isi_sk,
+            'tipe_sk' => $tipe_sk,
+        ]);
+
+        if ($data) {
+          return response()->json([
+            'success' => true,
+            'message' => 'data diupdate',
+          ], 200);
+        } else {
+          return response()->json([
+            'success' => false,
+            'message' => 'data tidak diupdate',
+            'data' => ''
+          ], 404);
+        }
+    }
+
+    public function deletesk(Request $request, $id_sk){
+        $data = M_Sk::where('id_sk', $id_sk)->delete();
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'message' => 'data dihapus',
+            ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak dihapus',
               'data' => ''
           ], 404);
         }
