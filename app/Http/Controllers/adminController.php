@@ -12,6 +12,8 @@ use App\M_User;
 use App\M_Service;
 use App\M_Rating;
 
+use Carbon\Carbon;
+
 class adminController extends Controller
 {
     // /**
@@ -198,35 +200,39 @@ class adminController extends Controller
 
      
     public function daftarteknisi(Request $request){
+
+        $skill = '';
+        foreach ($request->skill as $key) {
+            $skill .= $key . ',';
+        }
+
+        // 
+
         $t_selfi = $request->file('t_selfi');
         $namefile = $t_selfi->getClientOriginalName();
-        $t_selfi->move(public_path('images/teknisi'),$namefile);
+        $request->file('t_selfi')->move('public/teknisi/', $namefile);
 
         $t_ktp = $request->file('t_ktp');
         $ktp = $t_ktp->getClientOriginalName();
-        $t_selfi->move(public_path('images/teknisi'),$ktp);
+        $request->file('t_ktp')->move('public/teknisi/', $ktp);
 
         $data = new M_Teknisi();
         $data->t_nama = $request->input('t_nama');
         $data->t_email = $request->input('t_email');
         $data->t_alamat = $request->input('t_alamat');
         $data->t_hp = $request->input('t_hp');
-        $data->t_keahlian = $request->input('t_keahlian');
+        $data->t_keahlian = $skill;
         $data->t_ktp = $ktp;
         $data->t_selfi = $namefile;
         $data->save();
 
         if ($data) {
-            return response()->json([
-                'success' => true,
-                'message' => 'data disimpan',
-                'data' => $data
-            ], 200);
+            return redirect('http://l-fix.test/proses_regis');;
           } else {
             return response()->json([
                 'success' => false,
                 'message' => 'data tidak disimpan',
-                'data' => ''
+                'data' => 'Kosong'
             ], 404);
           }
     }
@@ -252,7 +258,7 @@ class adminController extends Controller
     Public function service(){
       $service = M_Service::join('users', 'service.id', '=', 'users.id')
       ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
-      ->join('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
+      ->leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
       ->select('service.id_service', 'service.id', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
       'users.name', 'teknisi.t_nama', 'service.start_date', 'service.status_service',
       'barang.kode_barang', 'barang.jenis_barang')
@@ -301,7 +307,7 @@ class adminController extends Controller
     }
 
     public function users(){
-        $data = M_Users::all();
+        $data = M_User::all();
         if($data){
           return response()->json([
               'success' => true,
@@ -318,14 +324,34 @@ class adminController extends Controller
     }
 
     public function dashboard(){
-        $barang = M_Barang::all();
-        $service = M_Service::all();
-        $teknisi = M_Teknisi::all();
+        $kategori_barang = M_Service::select('kode_barang')->groupBy('kode_barang')->get();
+        $service = M_Service::orderBy('created_at', 'DESC')->get();
+        $teknisi = M_Teknisi::orderBy('created_at', 'DESC')->get();
+
+        $months = M_Service::all()->groupBy(function($d) {
+           return Carbon::parse($d->created_at)->format('M');
+        });
+
+        foreach ($kategori_barang as $key) {
+          $kategori_barang = M_Service::where('kode_barang', $key->kode_barang)->get();
+          $done = M_Service::where('kode_barang', $key->kode_barang)->where('status_service', 'Done')->get();
+          $jenis_barang = M_Barang::where('kode_barang', $key->kode_barang)->first();
+          $dashb[] = [
+            'nama' => $jenis_barang->jenis_barang,
+            'jumlah_data' => count($kategori_barang),
+            'service_selesai' => count($done)
+          ];
+        }
+
+        // dd($dashb);
+
+        
 
         $data = [
           'service' => $service,
           'teknisi' => $teknisi,
-          'barang' => $barang,
+          'barang' => $dashb,
+          'months' => $months,
         ];
         
         if(count($data) != 0){
