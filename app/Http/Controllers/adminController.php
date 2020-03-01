@@ -408,4 +408,21 @@ class adminController extends Controller
         }
     }
 
+    public function sk (){
+        $data = M_Sk::orderBy('id_sk')->get();
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+      } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+        ], 404);
+      }
+    }
+
 }
