@@ -53,7 +53,7 @@ class teknisiController extends Controller
         ->where('service.id_teknisi', '=', null)
         ->select('service.id_service', 'service.id', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
         'users.name', 'users.phone',
-        'barang.kode_barang', 'barang.jenis_barang')
+        'barang.kode_barang', 'barang.jenis_barang', 'barang.icon')
         ->get();
 
         $coba = $service->groupBy('id_service');
@@ -64,6 +64,7 @@ class teknisiController extends Controller
                 'kode_service' => $services[$i]->kode_service,
                 'kode_barang' => $services[$i]->kode_barang,
                 'kategori' => $services[$i]->jenis_barang,
+                'icon_kategori' => 'https://l-fix.herokuapp.com/images/' . $services[$i]->icon,
                 'lokasiservice' => $services[$i]->lokasi,
                 'namauser' => $services[$i]->name,
                 'no_hp' => $services[$i]->phone,
