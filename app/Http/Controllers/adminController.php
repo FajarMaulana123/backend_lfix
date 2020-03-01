@@ -11,6 +11,7 @@ use App\M_Teknisi;
 use App\M_User;
 use App\M_Service;
 use App\M_Rating;
+use App\M_Sk;
 
 class adminController extends Controller
 {
@@ -200,12 +201,12 @@ class adminController extends Controller
     public function daftarteknisi(Request $request){
         $t_selfi = $request->file('t_selfi');
         $namefile = $t_selfi->getClientOriginalName();
-        $t_selfi->move(public_path('images/teknisi'),$namefile);
+        $t_selfi->move('public/images/teknisi',$namefile);
 
         $t_ktp = $request->file('t_ktp');
         $ktp = $t_ktp->getClientOriginalName();
-        $t_selfi->move(public_path('images/teknisi'),$ktp);
-
+        $t_ktp->move('public/images/teknisi',$ktp);
+        // dd($namefile);
         $data = new M_Teknisi();
         $data->t_nama = $request->input('t_nama');
         $data->t_email = $request->input('t_email');
@@ -252,11 +253,12 @@ class adminController extends Controller
     Public function service(){
       $service = M_Service::join('users', 'service.id', '=', 'users.id')
       ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
-      ->join('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
+      ->leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
       ->select('service.id_service', 'service.id', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
       'users.name', 'teknisi.t_nama', 'service.start_date', 'service.status_service',
       'barang.kode_barang', 'barang.jenis_barang')
       ->get();
+      
 
       if(count($service) != 0){
         return response()->json([
@@ -285,6 +287,9 @@ class adminController extends Controller
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
         ->get();
+
+
+
         if($data){
           return response()->json([
               'success' => true,
@@ -342,6 +347,27 @@ class adminController extends Controller
           ], 404);
         }
 
+    }
+
+    public function addsk(Request $request){
+      $data = new M_Sk();
+      $data->isi_sk = $request->input('isi_sk');
+      $data->tipe_sk = $request->input('tipe_sk');
+      $data->save();
+
+      if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data disimpan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak disimpan',
+              'data' => ''
+          ], 404);
+        }
     }
 
 }

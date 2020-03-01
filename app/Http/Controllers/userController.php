@@ -12,6 +12,7 @@ use App\M_User;
 use App\M_Service;
 use App\M_Rating;
 use App\M_Kerusakan;
+use App\M_Sk;
 
 use Carbon\Carbon;
 
@@ -649,6 +650,23 @@ class userController extends Controller
           ], 404);
         }
 
+    }
+
+    public function sk(){
+        $data = M_Sk::where('tipe_sk', 'users')->get();
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data disimpan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
     }
 
 }

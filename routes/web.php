@@ -32,6 +32,7 @@ $router->post('/cancel_service', 'userController@cancel_service');
 $router->post('/confirm_damage', 'userController@confirm_damage');
 $router->post('/data_guarantee', 'userController@data_guarantee');
 $router->post('/claim_guarantee', 'userController@claim_guarantee');
+$router->get('/sk', 'userController@sk');
 
 //teknisi
 $router->get('/api/teknisi/dataservice', 'teknisiController@dataservice');
@@ -65,3 +66,4 @@ $router->get('/api/admin/teknisi', 'adminController@teknisi');
 $router->get('/api/admin/service', 'adminController@service');
 $router->get('/api/admin/users', 'adminController@users');
 $router->get('/api/admin/detail_service/{kode_service}', 'adminController@detail_service');
+$router->post('/api/admin/addsk', 'adminController@addsk');
