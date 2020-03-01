@@ -11,6 +11,7 @@ use App\M_Estimasi;
 use App\M_Service;
 use App\M_Rating;
 use App\M_Kerusakan;
+use App\M_Sk;
 
 class teknisiController extends Controller
 {
@@ -52,7 +53,7 @@ class teknisiController extends Controller
         ->where('service.id_teknisi', '=', null)
         ->select('service.id_service', 'service.id', 'service.kode_service', 'service.kode_barang', 'service.lokasi',
         'users.name', 'users.phone',
-        'barang.kode_barang', 'barang.jenis_barang')
+        'barang.kode_barang', 'barang.jenis_barang', 'barang.icon')
         ->get();
 
         $coba = $service->groupBy('id_service');
@@ -63,6 +64,7 @@ class teknisiController extends Controller
                 'kode_service' => $services[$i]->kode_service,
                 'kode_barang' => $services[$i]->kode_barang,
                 'kategori' => $services[$i]->jenis_barang,
+                'icon_kategori' => 'https://l-fix.herokuapp.com/images/' . $services[$i]->icon,
                 'lokasiservice' => $services[$i]->lokasi,
                 'namauser' => $services[$i]->name,
                 'no_hp' => $services[$i]->phone,
@@ -250,4 +252,41 @@ class teknisiController extends Controller
     //     }
     // }
 
+    public function sk(){
+        $data = M_Sk::where('tipe_sk', 'teknisi')->get();
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data disimpan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
+    public function updateToken(Request $request){
+
+        $data = M_Teknisi::where('id_teknisi',$request->input('id_teknisi'))->update([
+            'remember_token' => $request->input('token'),
+          ]);
+
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
 }

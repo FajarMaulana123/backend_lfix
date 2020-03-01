@@ -11,6 +11,7 @@ use App\M_Teknisi;
 use App\M_User;
 use App\M_Service;
 use App\M_Rating;
+use App\M_Sk;
 
 use Carbon\Carbon;
 
@@ -142,10 +143,10 @@ class adminController extends Controller
           }
     }
 
-    public function updateestimasi(Request $request, $id){
+    public function updateestimasi(Request $request, $id_estimasi){
       $est_kerusakan = $request->input('est_kerusakan');
       $harga = $request->input('harga');  
-      $data = M_Estimasi::where('id_estimasi', $id)->update([
+      $data = M_Estimasi::where('id_estimasi', $id_estimasi)->update([
             'est_kerusakan' => $est_kerusakan,
             'harga' => $harga,
         ]);
@@ -164,8 +165,8 @@ class adminController extends Controller
         }
     }
 
-    public function deleteestimasi(Request $request, $id){
-        $data = M_Estimasi::where('id_estimasi', $id)->delete();
+    public function deleteestimasi(Request $request, $id_estimasi){
+        $data = M_Estimasi::where('id_estimasi', $id_estimasi)->delete();
         if ($data) {
             return response()->json([
                 'success' => true,
@@ -263,6 +264,7 @@ class adminController extends Controller
       'users.name', 'teknisi.t_nama', 'service.start_date', 'service.status_service',
       'barang.kode_barang', 'barang.jenis_barang')
       ->get();
+      
 
       if(count($service) != 0){
         return response()->json([
@@ -291,6 +293,9 @@ class adminController extends Controller
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
         ->get();
+
+
+
         if($data){
           return response()->json([
               'success' => true,
@@ -368,6 +373,82 @@ class adminController extends Controller
           ], 404);
         }
 
+    }
+
+    public function addsk(Request $request){
+      $data = new M_Sk();
+      $data->isi_sk = $request->input('isi_sk');
+      $data->tipe_sk = $request->input('tipe_sk');
+      $data->save();
+
+      if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data disimpan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak disimpan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
+    public function updatesk(Request $request, $id_sk){
+      $isi_sk = $request->input('isi_sk');
+      $tipe_sk = $request->input('tipe_sk');  
+      $data = M_Sk::where('id_sk', $id_sk)->update([
+            'isi_sk' => $isi_sk,
+            'tipe_sk' => $tipe_sk,
+        ]);
+
+        if ($data) {
+          return response()->json([
+            'success' => true,
+            'message' => 'data diupdate',
+          ], 200);
+        } else {
+          return response()->json([
+            'success' => false,
+            'message' => 'data tidak diupdate',
+            'data' => ''
+          ], 404);
+        }
+    }
+
+    public function deletesk(Request $request, $id_sk){
+        $data = M_Sk::where('id_sk', $id_sk)->delete();
+        if ($data) {
+            return response()->json([
+                'success' => true,
+                'message' => 'data dihapus',
+            ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak dihapus',
+              'data' => ''
+          ], 404);
+        }
+    }
+
+    public function sk (){
+        $data = M_Sk::orderBy('id_sk')->get();
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+      } else {
+        return response()->json([
+            'success' => false,
+            'message' => 'data tidak ditemukan',
+            'data' => ''
+        ], 404);
+      }
     }
 
 }
