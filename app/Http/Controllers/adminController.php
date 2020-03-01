@@ -282,7 +282,7 @@ class adminController extends Controller
     }
 
     public function detail_service(Request $request, $kode_service){
-        $data = M_Service::leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
+        $service = M_Service::leftjoin('teknisi', 'service.id_teknisi', '=', 'teknisi.id_teknisi')
         ->join('users', 'service.id', '=', 'users.id')
         ->join('barang', 'service.kode_barang', '=', 'barang.kode_barang')
         ->leftjoin('kerusakan', 'service.kode_service', '=', 'kerusakan.kode_service')
@@ -293,6 +293,40 @@ class adminController extends Controller
         'kerusakan.harga', 'kerusakan.kerusakan',
         'barang.kode_barang', 'barang.jenis_barang')
         ->get();
+
+        $coba = $service->groupBy('id_service');
+        for ($a=0; $a < sizeof($services); $a++) { 
+          $damege[$a] = [
+            'jenis' => $services[$a]->kerusakan,
+            'harga' => $services[$a]->harga
+          ];
+        }
+
+        $data[] = [
+          'idService' => $services[$i]->id_service,
+          'status' => $services[$i]->status_service,
+          'kode_service' => $services[$i]->kode_service,
+          'kode_barang' => $services[$i]->kode_barang,
+          'kategori' => $services[$i]->jenis_barang,
+          'lokasiPelanggan' => $services[$i]->lokasi,
+          'startDate' => $services[$i]->start_date,
+          'endDate' => $services[$i]->end_date,
+          'teknisi' => [
+              'namaTeknisi' => $services[$i]->t_nama,
+              'lokasiTeknisi' => $services[$i]->t_alamat,
+              'specialist' => $services[$i]->t_keahlian,
+              'no_hp' => $services[$i]->t_hp,
+              'rating' => $services[$i]->rating_teknisi,
+              'status_teknisi' => $services[$i]->status_teknisi,
+          ],
+          'damage' => $damege,
+          'guarantee' => [
+              'id_guarantee' => $services[$i]->id_service,
+              'id_service' => $services[$i]->id_service,
+              'status' => $services[$i]->status_garansi,
+              'valid_until' => $services[$i]->valid_until,
+          ]
+        ];
 
 
 
