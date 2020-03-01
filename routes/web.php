@@ -33,6 +33,7 @@ $router->post('/confirm_damage', 'userController@confirm_damage');
 $router->post('/data_guarantee', 'userController@data_guarantee');
 $router->post('/claim_guarantee', 'userController@claim_guarantee');
 $router->get('/sk', 'userController@sk');
+$router->post('/profile', 'userController@profile');
 
 //teknisi
 $router->get('/api/teknisi/dataservice', 'teknisiController@dataservice');
@@ -43,6 +44,7 @@ $router->post('/api/teknisi/datakerusakan', 'teknisiController@datakerusakan');
 $router->post('/api/teknisi/login', 'teknisiController@login');
 $router->get('/api/teknisi/sk', 'teknisiController@sk');
 $router->post('/api/teknisi/updatetoken', 'teknisiController@updateToken');
+$router->post('/api/teknisi/profile', 'teknisiController@profile');
 // $router->post('/api/teknisi/rating', 'teknisiController@rating');
 // $router->post('/api/teknisi/pergi', 'teknisiController@pergi');
 // $router->post('/api/teknisi/doingservice', 'teknisiController@doingservice');

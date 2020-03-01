@@ -705,4 +705,22 @@ class userController extends Controller
         }
     }
 
+    public function profile (Request $request){
+        $id = $request->input('id');
+        $data = M_User::where('id', $id)->first();
+        if ($data) {
+          return response()->json([
+              'success' => true,
+              'message' => 'data ditemukan',
+              'data' => $data
+          ], 200);
+        } else {
+          return response()->json([
+              'success' => false,
+              'message' => 'data tidak ditemukan',
+              'data' => ''
+          ], 404);
+        }
+    }
+
 }
