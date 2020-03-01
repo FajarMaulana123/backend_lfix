@@ -68,7 +68,10 @@ $router->get('/api/admin/teknisi', 'adminController@teknisi');
 $router->get('/api/admin/service', 'adminController@service');
 $router->get('/api/admin/users', 'adminController@users');
 $router->get('/api/admin/detail_service/{kode_service}', 'adminController@detail_service');
+
+$router->get('/api/admin/dashboard', 'adminController@dashboard');
 $router->post('/api/admin/addsk', 'adminController@addsk');
 $router->post('/api/admin/updatesk/{id_sk}', 'adminController@updatesk');
 $router->get('/api/admin/deletesk/{id_sk}', 'adminController@deletesk');
 $router->get('/api/admin/sk', 'adminController@sk');
+
